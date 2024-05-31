@@ -1,0 +1,73 @@
+export const F1_URL = "https://www.formula1.com";
+export const F1_YEAR = "2024";
+
+export const RESULTS = 'en/results.html';
+export const RACING = 'en/racing';
+
+export const RACES = "races.html";
+export const DRIVERS = "drivers.html";
+export const TEAMS = "team.html";
+
+export const TABLE_ELEMENT = "table.resultsarchive-table tbody tr";
+
+export const racesMap = new Map<string, { race: string; place: string }>();
+racesMap.set("bahrain", { race: "races/1229/bahrain", place: "Bahrain" });
+racesMap.set("saudi-arabia", { race: "races/1230/saudi-arabia", place: "Saudi Arabia" });
+racesMap.set("australia", { race: "races/1231/australia", place: "Australia" });
+racesMap.set("japan", { race: "races/1232/japan", place: "Japan" });
+racesMap.set("china", { race: "races/1233/china", place: "China" });
+racesMap.set("miami", { race: "races/1234/miami", place: "Miami" });
+racesMap.set("italy", { race: "races/1235/italy", place: "Emilia-Romagna" });
+racesMap.set("monaco", { race: "races/1236/monaco", place: "Monaco" });
+racesMap.set("canada", { race: "races/1237/canada", place: "Canada" });
+racesMap.set("spain", { race: "races/1238/spain", place: "Spain" });
+racesMap.set("austria", { race: "races/1239/austria", place: "Austria" });
+racesMap.set("great-britain", { race: "races/1240/great-britain", place: "Great Britain" });
+racesMap.set("hungary", { race: "races/1241/hungary", place: "Hungary" });
+racesMap.set("belgium", { race: "races/1242/belgium", place: "Belgium" });
+racesMap.set("netherlands", { race: "races/1243/netherlands", place: "Netherlands" });
+racesMap.set("monza", { race: "races/1244/italy", place: "Italy" });
+racesMap.set("azerbaijan", { race: "races/1245/azerbaijan", place: "Azerbaijan" });
+racesMap.set("singapore", { race: "races/1246/singapore", place: "Singapore" });
+racesMap.set("united-states", { race: "races/1247/united-states", place: "United States" });
+racesMap.set("mexico", { race: "races/1248/mexico", place: "Mexico" });
+racesMap.set("brazil", { race: "races/1249/brazil", place: "Brazil" });
+racesMap.set("las-vegas", { race: "races/1250/las-vegas", place: "Las Vegas" });
+racesMap.set("qatar", { race: "races/1251/qatar", place: "Qatar" });
+racesMap.set("abu-dhabi", { race: "races/1252/abu-dhabi", place: "Abu Dhabi" });
+
+export const getRacePlace = (race: string) => {
+  return racesMap.get(race)?.place;
+}
+
+export const getRaceResultUrl = (race: string) => {
+  return `${racesMap.get(race)?.race}/race-result.html`;
+}
+
+export const getFastestLapsUrl = (race: string) => {
+  return `${racesMap.get(race)?.race}/fastest-laps.html`;
+}
+
+export const getPitStopsUrl = (race: string) => {
+  return `${racesMap.get(race)?.race}/pit-stops-summary.html`;
+}
+
+export const getQualifyingUrl = (race: string) => {
+  return `${racesMap.get(race)?.race}/qualifying.html`;
+}
+
+export const getStartingGridUrl = (race: string) => {
+  return `${racesMap.get(race)?.race}/starting-grid.html`;
+}
+
+export const getPracticeOneUrl = (race: string) => {
+  return `${racesMap.get(race)?.race}/practice-1.html`;
+}
+
+export const getPracticeTwoUrl = (race: string) => {
+  return `${racesMap.get(race)?.race}/practice-2.html`;
+}
+
+export const getPracticeThreeUrl = (race: string) => {
+  return `${racesMap.get(race)?.race}/practice-3.html`;
+}
