@@ -19,10 +19,3 @@ export const addDrivers = async (env: Env, drivers: Driver[]): Promise<void> => 
   await xata.addDrivers(drivers);
 };
 
-export const getDrivers = async (env: Env, keys: DriverKeys[]): Promise<Driver[]> => {
-  const xata = DBXataClient.getInstance(env);
-  return xata.getDrivers(keys);
-};
-
-
-

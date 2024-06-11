@@ -1,5 +1,5 @@
 import { Context, Hono } from "hono";
-import { addDrivers } from './db/driver';
+import { addDrivers } from './db/drivers';
 import { addRaceResult } from './db/race';
 import { addRacesResults } from './db/races';
 import { addSchedule } from './db/schedule';
