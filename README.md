@@ -1,6 +1,6 @@
 # F1 Scraper Project
 
-![Cloudflare](https://img.shields.io/badge/Technology-Cloudflare-blue)
+![Cloudflare](https://img.shields.io/badge/Technology-Cloudflare-orange)
 ![Cheerio](https://img.shields.io/badge/Scraper-Cheerio-green)
 ![License](https://img.shields.io/badge/License-Non--Profit%20Educational%20Use-lightgrey)
 
