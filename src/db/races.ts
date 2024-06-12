@@ -16,7 +16,7 @@ export const addRacesResults = async (env: Env, races: RaceResult[]): Promise<vo
   await xata.addRacesResults(racesResultsToAdd);
 };
 
-const mergeRaceResults = (races: RaceResult[], dbRaces: RaceResultDB[]) => {
+const mergeRaceResults = (races: RaceResult[], dbRaces: RaceResultDB[]): RaceResultDB[] => {
   return races.map((raceResult: RaceResult) => {
     const racesMap = new Map(dbRaces.map(race => [race.track, race]));
 
