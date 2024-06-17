@@ -21,7 +21,6 @@ export const getTeams = async (env: Env): Promise<Team[]> => {
 
 export const setTeamImage = async (team: Team, env: Env) => {
   const teamNameToSearch = team.name.replace(/\s+/g, '_');
-  console.log('team to search: ', teamNameToSearch);
   const image = await env.F1_ASSETS.get(teamNameToSearch);
 
   if (image === null) {

@@ -10,6 +10,8 @@ export class DBXataClient implements DBClient {
   private client: XataClient;
 
   private constructor(env: Env) {
+    console.log('env: ', env);
+
     this.client = new XataClient({
       apiKey: env.XATA_API_KEY,
       branch: env.XATA_BRANCH,
