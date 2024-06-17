@@ -37,7 +37,7 @@ const setDriverName = (row: Element, $: CheerioAPI) => {
 
 const setPosition = (row: Element, $: CheerioAPI, resultIndex: number) => {
   const position = $(row).find(`td:nth-child(${resultIndex + 2})`).text().replace(/\s+/g, ' ').trim();
-  return position === 'NC' ? position : Number(position);
+  return position === 'NC' ? 99 : Number(position);
 };
 
 const setText = (row: Element, $: CheerioAPI, resultIndex: number) => {
