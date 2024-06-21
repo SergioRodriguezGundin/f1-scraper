@@ -15,7 +15,7 @@ export const getRaces = async (): Promise<RaceResult[]> => {
     return races;
   } catch (error) {
     console.error(error);
-    throw new Error("Failed to fetch race data");
+    throw new Error("Failed to fetch races data");
   }
 }
 

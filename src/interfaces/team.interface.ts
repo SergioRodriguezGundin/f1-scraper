@@ -7,8 +7,10 @@ export interface Team {
   name: string;
   points: number;
   image: string;
+  icon: string;
+  car: string;
 }
 
 export type TeamKeys = keyof Team;
 
-export const teamKeys: TeamKeys[] = ['position', 'name', 'points', 'image'];
+export const teamKeys: TeamKeys[] = ['position', 'name', 'points', 'image', 'icon', 'car'];

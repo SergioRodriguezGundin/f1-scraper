@@ -18,8 +18,8 @@ const tables = [
       { name: "team", type: "link", link: { table: "Team" } },
     ],
     revLinks: [
-      { column: "winner", table: "Races_result" },
       { column: "driver", table: "Race_result" },
+      { column: "winner", table: "Races_result" },
     ],
   },
   {
@@ -29,6 +29,8 @@ const tables = [
       { name: "points", type: "int", notNull: true, defaultValue: "0" },
       { name: "image", type: "string", notNull: true, defaultValue: " " },
       { name: "name", type: "string", notNull: true, defaultValue: " " },
+      { name: "icon", type: "string" },
+      { name: "car", type: "string", notNull: true, defaultValue: " " },
     ],
     revLinks: [
       { column: "team", table: "Driver" },
@@ -60,11 +62,11 @@ const tables = [
     name: "Races_result",
     columns: [
       { name: "track", type: "string", notNull: true, defaultValue: " " },
-      { name: "date", type: "string", defaultValue: " " },
-      { name: "winner", type: "link", link: { table: "Driver" } },
       { name: "team", type: "link", link: { table: "Team" } },
-      { name: "laps", type: "int", defaultValue: "0" },
       { name: "time", type: "string", notNull: true, defaultValue: " " },
+      { name: "laps", type: "int", notNull: true, defaultValue: "0" },
+      { name: "date", type: "string", notNull: true, defaultValue: " " },
+      { name: "winner", type: "link", link: { table: "Driver" } },
     ],
   },
   {

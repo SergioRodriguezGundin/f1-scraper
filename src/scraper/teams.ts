@@ -15,17 +15,29 @@ export const getTeams = async (env: Env): Promise<Team[]> => {
     return teams.sort((a, b) => a.position - b.position);
   } catch (error) {
     console.error(error);
-    throw new Error("Failed to fetch race data");
+    throw new Error("Failed to fetch teams data");
   }
 }
 
 export const setTeamImage = async (team: Team, env: Env) => {
   const teamNameToSearch = team.name.replace(/\s+/g, '_');
-  const image = await env.F1_ASSETS.get(teamNameToSearch);
+  const teamImage = await env.F1_ASSETS.get(teamNameToSearch);
+  const teamIcon = await env.F1_ASSETS.get(`${teamNameToSearch}_icon`);
+  const teamCar = await env.F1_ASSETS.get(`${teamNameToSearch}_car`);
 
-  if (image === null) {
+  if (teamImage === null) {
     throw new Error(`Image not found for team: ${teamNameToSearch}`);
   }
 
-  team.image = image;
+  if (teamIcon === null) {
+    throw new Error(`Icon not found for team: ${teamNameToSearch}`);
+  }
+
+  if (teamCar === null) {
+    throw new Error(`Car not found for team: ${teamNameToSearch}`);
+  }
+
+  team.image = teamImage;
+  team.icon = teamIcon;
+  team.car = teamCar;
 }

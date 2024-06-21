@@ -8,6 +8,8 @@ export const addTeams = async (env: Env, teams: Team[]) => {
   const teamsDB = await xata.getTeams();
   const teamsMerged = mergeTeams(teams, teamsDB);
 
+  console.log('teamsMerged: ', teamsMerged);
+
   await xata.addTeams(teamsMerged);
 };
 

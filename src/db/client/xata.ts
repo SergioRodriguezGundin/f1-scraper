@@ -72,7 +72,7 @@ export class DBXataClient implements DBClient {
 
   public async addTeams(teams: Team[]): Promise<void> {
     try {
-      await this.client.db.Team.create(teams);
+      await this.client.db.Team.createOrUpdate(teams);
     } catch (error) {
       console.error('Error creating teams: ', error);
     }
