@@ -24,10 +24,16 @@ export const setDriverImage = async (driver: Driver, env: Env) => {
   const nameParts = driver.name.split(' ');
   const keyName = nameParts[nameParts.length - 1];
   const image = await env.F1_ASSETS.get(keyName, { type: "text", cacheTtl: 3600 });
+  const flag = await env.F1_ASSETS.get(driver.nationality, { type: "text", cacheTtl: 3600 });
 
   if (image === null) {
     throw new Error('Image not found');
   }
 
+  if (flag === null) {
+    throw new Error('Nationality not found');
+  }
+
   driver.image = image;
+  driver.nationality = flag;
 }

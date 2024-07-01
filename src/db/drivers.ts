@@ -10,6 +10,8 @@ export const addDrivers = async (env: Env, drivers: Driver[]): Promise<void> => 
   const driversDB = await xata.getDrivers();
 
   const driversComposed = composeDrivers(drivers, teams);
+  console.log('driversComposed: ', driversComposed);
+
   const driversMerged = mergeDrivers(driversComposed, driversDB);
 
   await xata.addDrivers(driversMerged);
@@ -30,8 +32,9 @@ const mergeDrivers = (drivers: Driver[], driversDB: DriverDB[]): DriverDB[] => {
 
 
 const composeDrivers = (drivers: Driver[], teams: TeamDB[]): Driver[] => {
+  const teamMap = new Map(teams.map((team: TeamDB) => [team.name, team]));
+
   return drivers.map((driver: Driver) => {
-    const teamMap = new Map(teams.map((team: TeamDB) => [team.id, team]));
     const team = teamMap.get(driver.team);
 
     return { ...driver, team: team?.id ?? '' };

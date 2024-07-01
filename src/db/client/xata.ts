@@ -41,7 +41,7 @@ export class DBXataClient implements DBClient {
 
   public async addDrivers(drivers: Driver[]): Promise<void> {
     try {
-      await this.client.db.Driver.create(drivers);
+      await this.client.db.Driver.createOrUpdate(drivers);
     } catch (error) {
       console.error('Error creating drivers: ', error);
     }
