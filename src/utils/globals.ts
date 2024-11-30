@@ -1,14 +1,14 @@
 export const F1_URL = "https://www.formula1.com";
 export const F1_YEAR = "2024";
 
-export const RESULTS = 'en/results.html';
+export const RESULTS = 'en/results';
 export const RACING = 'en/racing';
 
-export const RACES = "races.html";
+export const RACES = "races";
 export const DRIVERS = "drivers.html";
 export const TEAMS = "team.html";
 
-export const TABLE_ELEMENT = "table.resultsarchive-table tbody tr";
+export const TABLE_ELEMENT = "table.f1-table tbody tr";
 
 export const racesMap = new Map<string, { race: string; place: string }>();
 racesMap.set("bahrain", { race: "races/1229/bahrain", place: "Bahrain" });

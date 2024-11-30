@@ -10,7 +10,6 @@ export const addDrivers = async (env: Env, drivers: Driver[]): Promise<void> => 
   const driversDB = await xata.getDrivers();
 
   const driversComposed = composeDrivers(drivers, teams);
-  console.log('driversComposed: ', driversComposed);
 
   const driversMerged = mergeDrivers(driversComposed, driversDB);
 

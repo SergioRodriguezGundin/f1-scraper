@@ -10,8 +10,6 @@ export class DBXataClient implements DBClient {
   private client: XataClient;
 
   private constructor(env: Env) {
-    console.log('env: ', env);
-
     this.client = new XataClient({
       apiKey: env.XATA_API_KEY,
       branch: env.XATA_BRANCH,
@@ -91,7 +89,6 @@ export class DBXataClient implements DBClient {
   public async getRacesResults(keys: RaceResultKeys[] = raceResultKeys) {
     try {
       const records = await this.client.db.Races_result.select(keys).getAll();
-      console.log('records: ', records);
       return records.map((record: Record<RaceResultKeys, any>) => record as RaceResultDB) as RaceResultDB[];
     } catch (error) {
       console.error('Error getting races results: ', error);

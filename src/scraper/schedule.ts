@@ -4,7 +4,6 @@ import { F1_URL, F1_YEAR, RACING } from '../utils/globals';
 
 export const getSchedule = async (): Promise<Schedule[]> => {
   const url = `${F1_URL}/${RACING}/${F1_YEAR}.html`;
-  console.log('url: ', url);
 
   try {
     const response = await fetch(url);

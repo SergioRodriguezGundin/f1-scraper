@@ -5,10 +5,10 @@ import { F1_URL, F1_YEAR, RACES, RESULTS } from '../utils/globals';
 
 export const getRaces = async (): Promise<RaceResult[]> => {
   const url = `${F1_URL}/${RESULTS}/${F1_YEAR}/${RACES}`;
+  console.log('URL: ', url);
   try {
     const response = await fetch(url);
     const html = await response.text();
-
     const race: RaceResult = raceModel;
     const races: RaceResult[] = await extractElement<RaceResult>(html, race);
 
