@@ -1,21 +1,23 @@
 import { RaceResult, RaceResultDetail } from '../interfaces/race.interface';
 
 export const raceModel: RaceResult = {
-  track: "",
-  date: "",
-  winner: "",
-  team: "",
+  track: '',
+  date: '',
+  winner: '',
+  team: '',
   laps: 0,
-  time: "",
+  time: '',
 }
 
 export const raceResultDetailModel: RaceResultDetail = {
   position: 0,
   driverNumber: 0,
-  driver: "",
-  team: "",
+  driver: '',
+  team: '',
   laps: 0,
-  timeOrRetired: "",
+  timeOrRetired: '',
   points: 0,
+  year: 2024,
+  place: ''
 }
 

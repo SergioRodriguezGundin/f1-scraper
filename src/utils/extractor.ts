@@ -1,6 +1,14 @@
 import { CheerioAPI, Element, load } from 'cheerio';
 import { TABLE_ELEMENT } from './globals';
 
+/**
+ * Extracts the data from the HTML table and returns an array of F1 objects.
+ * @param html - The HTML string to extract the data from.
+ * @param f1Object - The F1 object to set the data to.
+ * @param retrieveAdditionalData - An optional function to retrieve additional data.
+ * @param env - The environment variables.
+ * @returns An array of F1 objects.
+ */
 export const extractElement = async <T extends object>(html: string, f1Object: T, retrieveAdditionalData?: (f1Object: T, env: Env) => Promise<void>, env?: Env): Promise<T[]> => {
   const $: CheerioAPI = load(html);
   const results: T[] = [];
@@ -8,8 +16,8 @@ export const extractElement = async <T extends object>(html: string, f1Object: T
   const promises = $(TABLE_ELEMENT).map(async (index, row) => {
     const f1ObjectCopy = { ...f1Object };
     Object.keys(f1Object).forEach((key, resultIndex) => {
-      if (key === 'driver' || key === 'winner') {
-        f1ObjectCopy[key as keyof T] = setDriverName(row, $) as T[keyof T];
+      if ((key === 'name' && f1Object.hasOwnProperty('nationality')) || key === 'driver' || key === 'winner') {
+        f1ObjectCopy[key as keyof T] = setDriverName(row, $, f1Object) as T[keyof T];
       } else if (key === 'position') {
         f1ObjectCopy[key as keyof T] = setPosition(row, $, resultIndex) as T[keyof T];
       } else {
@@ -27,19 +35,28 @@ export const extractElement = async <T extends object>(html: string, f1Object: T
   return results;
 };
 
-const setDriverName = (row: Element, $: CheerioAPI) => {
-  const driverFirstName = $(row).find(`tr > td:nth-child(3) > p > :first-child`).text();
-  const driverLastName = $(row).find(`tr > td:nth-child(3) > p > :nth-child(2)`).text();
-  const driverAlias = $(row).find(`tr > td:nth-child(3) > p > :last-child`).text();
+const setDriverName = <T extends object>(row: Element, $: CheerioAPI, f1Object: T) => {
+  const searchString = getSearchString(f1Object);
+
+  const driverFirstName = $(row).find(`${searchString} > :first-child`).text();
+  const driverLastName = $(row).find(`${searchString} > :nth-child(2)`).text();
+  const driverAlias = $(row).find(`${searchString} > :last-child`).text();
   return driverAlias === 'ZHO' ? `${driverLastName} ${driverFirstName} ${driverAlias}` : `${driverFirstName} ${driverLastName} ${driverAlias}`;
 };
 
 const setPosition = (row: Element, $: CheerioAPI, resultIndex: number) => {
-  const position = $(row).find(`td:nth-child(${resultIndex + 2})`).text().replace(/\s+/g, ' ').trim();
+  const position = $(row).find(`td:nth-child(${resultIndex + 1})`).text().replace(/\s+/g, ' ').trim();
   return position === 'NC' ? 99 : Number(position);
 };
 
 const setText = (row: Element, $: CheerioAPI, resultIndex: number) => {
   const text = $(row).find(`td:nth-child(${resultIndex + 1})`).text().replace(/\s+/g, ' ').trim();
   return /^\d+$/.test(text) ? Number(text) : text;
+};
+
+const getSearchString = <T extends object>(f1Object: T): string => {
+  if (f1Object.hasOwnProperty('nationality')) {
+    return 'tr > td:nth-child(2) > p > a';
+  }
+  return 'tr > td:nth-child(3) > p';
 };

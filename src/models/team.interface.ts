@@ -2,9 +2,11 @@ import { Team } from '../interfaces/team.interface';
 
 export const teamModel: Team = {
   position: 0,
-  name: "",
+  name: '',
   points: 0,
-  image: "",
+  image: '',
+  icon: '',
+  car: ''
 }
 
 

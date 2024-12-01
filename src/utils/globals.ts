@@ -5,8 +5,8 @@ export const RESULTS = 'en/results';
 export const RACING = 'en/racing';
 
 export const RACES = "races";
-export const DRIVERS = "drivers.html";
-export const TEAMS = "team.html";
+export const DRIVERS = "drivers";
+export const TEAMS = "team";
 
 export const TABLE_ELEMENT = "table.f1-table tbody tr";
 
@@ -41,33 +41,33 @@ export const getRacePlace = (race: string) => {
 }
 
 export const getRaceResultUrl = (race: string) => {
-  return `${racesMap.get(race)?.race}/race-result.html`;
+  return `${racesMap.get(race)?.race}/race-result`;
 }
 
 export const getFastestLapsUrl = (race: string) => {
-  return `${racesMap.get(race)?.race}/fastest-laps.html`;
+  return `${racesMap.get(race)?.race}/fastest-laps`;
 }
 
 export const getPitStopsUrl = (race: string) => {
-  return `${racesMap.get(race)?.race}/pit-stops-summary.html`;
+  return `${racesMap.get(race)?.race}/pit-stops-summary`;
 }
 
 export const getQualifyingUrl = (race: string) => {
-  return `${racesMap.get(race)?.race}/qualifying.html`;
+  return `${racesMap.get(race)?.race}/qualifying`;
 }
 
 export const getStartingGridUrl = (race: string) => {
-  return `${racesMap.get(race)?.race}/starting-grid.html`;
+  return `${racesMap.get(race)?.race}/starting-grid`;
 }
 
 export const getPracticeOneUrl = (race: string) => {
-  return `${racesMap.get(race)?.race}/practice-1.html`;
+  return `${racesMap.get(race)?.race}/practice-1`;
 }
 
 export const getPracticeTwoUrl = (race: string) => {
-  return `${racesMap.get(race)?.race}/practice-2.html`;
+  return `${racesMap.get(race)?.race}/practice-2`;
 }
 
 export const getPracticeThreeUrl = (race: string) => {
-  return `${racesMap.get(race)?.race}/practice-3.html`;
+  return `${racesMap.get(race)?.race}/practice-3`;
 }
