@@ -35,7 +35,7 @@ app.get("/drivers", async (c: Context) => {
 
 app.get("/races", async (c: Context) => {
 	try {
-		const races: RaceResult[] = await getRaces();
+		const races: RaceResult[] = await getRaces(c.env);
 		// add races to database
 		await addRacesResults(c.env, races);
 

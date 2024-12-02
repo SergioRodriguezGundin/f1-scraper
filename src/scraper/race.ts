@@ -1,3 +1,4 @@
+import { Extractor } from '../interfaces/extractor.interface';
 import { RaceResultDetail } from '../interfaces/race.interface';
 import { raceResultDetailModel } from '../models/race.model';
 import { extractElement } from '../utils/extractor';
@@ -17,8 +18,12 @@ export const getRace = async (env: Env, id: string): Promise<RaceResultDetail[]>
     const response = await fetch(url);
     const html = await response.text();
 
-    const race: RaceResultDetail = raceResultDetailModel;
-    const raceResults: RaceResultDetail[] = await extractElement<RaceResultDetail>(html, race, setYear, env);
+    const raceDetail: RaceResultDetail = raceResultDetailModel;
+    const extractor: Extractor<RaceResultDetail> = {
+      f1Object: raceDetail,
+      retrieveAdditionalData: setYear,
+    };
+    const raceResults: RaceResultDetail[] = await extractElement<RaceResultDetail>(html, extractor, env);
 
     return raceResults;
   } catch (error) {

@@ -1,5 +1,6 @@
 import { CheerioAPI, Element, load } from 'cheerio';
-import { TABLE_ELEMENT } from './globals';
+import { Category, DRIVERS, RACES, TABLE_ELEMENT, TEAMS } from './globals';
+import { Extractor } from '../interfaces/extractor.interface';
 
 /**
  * Extracts the data from the HTML table and returns an array of F1 objects.
@@ -9,7 +10,8 @@ import { TABLE_ELEMENT } from './globals';
  * @param env - The environment variables.
  * @returns An array of F1 objects.
  */
-export const extractElement = async <T extends object>(html: string, f1Object: T, retrieveAdditionalData?: (f1Object: T, env: Env) => Promise<void>, env?: Env): Promise<T[]> => {
+export const extractElement = async <T extends object>(html: string, extractor: Extractor<T>, env?: Env): Promise<T[]> => {
+  const { f1Object, retrieveAdditionalData } = extractor;
   const $: CheerioAPI = load(html);
   const results: T[] = [];
 
@@ -46,7 +48,7 @@ const setDriverName = <T extends object>(row: Element, $: CheerioAPI, f1Object: 
 
 const setPosition = (row: Element, $: CheerioAPI, resultIndex: number) => {
   const position = $(row).find(`td:nth-child(${resultIndex + 1})`).text().replace(/\s+/g, ' ').trim();
-  return position === 'NC' ? 99 : Number(position);
+  return position === 'NC' || position === 'DQ' ? 99 : Number(position);
 };
 
 const setText = (row: Element, $: CheerioAPI, resultIndex: number) => {

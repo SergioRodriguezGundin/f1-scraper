@@ -1,3 +1,4 @@
+import { Extractor } from '../interfaces/extractor.interface';
 import { Team } from '../interfaces/team.interface';
 import { teamModel } from '../models/team.interface';
 import { extractElement } from '../utils/extractor';
@@ -10,7 +11,11 @@ export const getTeams = async (env: Env): Promise<Team[]> => {
     const html = await response.text();
 
     const team: Team = teamModel;
-    const teams: Team[] = await extractElement<Team>(html, team, setTeamImage, env);
+    const extractor: Extractor<Team> = {
+      f1Object: team,
+      retrieveAdditionalData: setTeamImage
+    };
+    const teams: Team[] = await extractElement<Team>(html, extractor, env);
 
     return teams.sort((a, b) => a.position - b.position);
   } catch (error) {

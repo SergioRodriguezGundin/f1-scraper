@@ -1,4 +1,5 @@
 import { Driver } from '../interfaces/driver.interface';
+import { Extractor } from '../interfaces/extractor.interface';
 import { driverModel } from '../models/driver.model';
 import { extractElement } from '../utils/extractor';
 import { DRIVERS, F1_URL, F1_YEAR, RESULTS } from '../utils/globals';
@@ -10,7 +11,12 @@ export const getDrivers = async (env: Env): Promise<Driver[]> => {
     const html = await response.text();
 
     const driver: Driver = driverModel;
-    const drivers: Driver[] = await extractElement<Driver>(html, driver, setDriverImage, env);
+
+    const extractor: Extractor<Driver> = {
+      f1Object: driver,
+      retrieveAdditionalData: setDriverImage,
+    };
+    const drivers: Driver[] = await extractElement<Driver>(html, extractor, env);
 
     return drivers.sort((a, b) => a.position - b.position);
   } catch (error) {

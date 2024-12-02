@@ -8,6 +8,8 @@ export const RACES = "races";
 export const DRIVERS = "drivers";
 export const TEAMS = "team";
 
+export type Category = typeof RACES | typeof DRIVERS | typeof TEAMS;
+
 export const TABLE_ELEMENT = "table.f1-table tbody tr";
 
 export const racesMap = new Map<string, { race: string; place: string }>();
