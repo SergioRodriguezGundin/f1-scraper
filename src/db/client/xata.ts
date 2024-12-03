@@ -1,8 +1,8 @@
-import { Driver, DriverDB, DriverKeys, driverKeys } from '../../interfaces/driver.interface';
-import { RaceResultDB, RaceResultDetail, RaceResultDetailKeys, RaceResultKeys, raceResultKeys } from '../../interfaces/race.interface';
+import { DriverKeys, driverKeys } from '../../interfaces/driver.interface';
+import { RaceResultDetailKeys, RaceResultKeys, raceResultKeys } from '../../interfaces/race.interface';
 import { ScheduleKeys } from '../../interfaces/schedule.interface';
-import { Team, TeamDB, TeamKeys, teamKeys } from '../../interfaces/team.interface';
-import { Schedule, XataClient } from '../../xata';
+import { TeamKeys, teamKeys } from '../../interfaces/team.interface';
+import { Driver, RaceResult, RacesResult, Schedule, Team, XataClient } from '../../xata';
 import { DBClient } from './client.interface';
 
 export class DBXataClient implements DBClient {
@@ -24,7 +24,7 @@ export class DBXataClient implements DBClient {
     return DBXataClient.instance;
   }
 
-  public async getDriver(keys: DriverKeys[], values: any[]): Promise<DriverDB | null> {
+  public async getDriver(keys: DriverKeys[], values: any[]): Promise<Driver | null> {
     const filterObject = keys.reduce((obj, key, index) => {
       obj[key] = values[index];
       return obj;
@@ -34,7 +34,7 @@ export class DBXataClient implements DBClient {
     if (!driverRecord) {
       return null;
     }
-    return driverRecord as unknown as DriverDB;
+    return driverRecord as unknown as Driver;
   }
 
   public async addDrivers(drivers: Driver[]): Promise<void> {
@@ -45,17 +45,17 @@ export class DBXataClient implements DBClient {
     }
   }
 
-  public async getDrivers(keys: DriverKeys[] = driverKeys): Promise<DriverDB[]> {
+  public async getDrivers(keys: DriverKeys[] = driverKeys): Promise<Driver[]> {
     try {
       const records = await this.client.db.Driver.select(keys).getAll();
-      return records.map((record: Record<DriverKeys, any>) => record as DriverDB) as DriverDB[];
+      return records.map((record: Record<DriverKeys, any>) => record as Driver) as Driver[];
     } catch (error) {
       console.error('Error getting drivers: ', error);
       throw error;
     }
   }
 
-  public async getTeam(keys: TeamKeys[], values: any[]): Promise<TeamDB | null> {
+  public async getTeam(keys: TeamKeys[], values: any[]): Promise<Team | null> {
     const filterObject = keys.reduce((obj, key, index) => {
       obj[key] = values[index];
       return obj;
@@ -65,7 +65,7 @@ export class DBXataClient implements DBClient {
     if (!teamRecord) {
       return null;
     }
-    return teamRecord as unknown as TeamDB;
+    return teamRecord as unknown as Team;
   }
 
   public async addTeams(teams: Team[]): Promise<void> {
@@ -76,10 +76,10 @@ export class DBXataClient implements DBClient {
     }
   }
 
-  public async getTeams(keys: TeamKeys[] = teamKeys): Promise<TeamDB[]> {
+  public async getTeams(keys: TeamKeys[] = teamKeys): Promise<Team[]> {
     try {
       const records = await this.client.db.Team.select(keys).getAll();
-      return records.map((record: Record<TeamKeys, any>) => record as TeamDB) as TeamDB[];
+      return records.map((record: Record<TeamKeys, any>) => record as Team) as Team[];
     } catch (error) {
       console.error('Error getting teams: ', error);
       throw error;
@@ -89,14 +89,14 @@ export class DBXataClient implements DBClient {
   public async getRacesResults(keys: RaceResultKeys[] = raceResultKeys) {
     try {
       const records = await this.client.db.Races_result.select(keys).getAll();
-      return records.map((record: Record<RaceResultKeys, any>) => record as RaceResultDB) as RaceResultDB[];
+      return records.map((record: Record<RaceResultKeys, any>) => record as RacesResult) as RacesResult[];
     } catch (error) {
       console.error('Error getting races results: ', error);
       throw error;
     }
   }
 
-  public async addRacesResults(races: RaceResultDB[]): Promise<void> {
+  public async addRacesResults(races: RaceResult[]): Promise<void> {
     try {
       await this.client.db.Races_result.createOrReplace(races);
     } catch (error) {
@@ -127,7 +127,7 @@ export class DBXataClient implements DBClient {
     }
   }
 
-  public async getRaceResult(keys: RaceResultDetailKeys[], values: any[]): Promise<RaceResultDB | null> {
+  public async getRaceResult(keys: RaceResultDetailKeys[], values: any[]): Promise<RaceResult | null> {
     const filterObject = keys.reduce((obj, key, index) => {
       obj[key] = values[index];
       return obj;
@@ -137,10 +137,10 @@ export class DBXataClient implements DBClient {
     if (!raceResult) {
       return null;
     }
-    return raceResult as unknown as RaceResultDB;
+    return raceResult as unknown as RaceResult;
   }
 
-  public async addRaceResult(raceResults: RaceResultDetail[]): Promise<void> {
+  public async addRaceResult(raceResults: RacesResult[]): Promise<void> {
     try {
       await this.client.db.Race_result.create(raceResults);
     } catch (error) {

@@ -1,38 +1,10 @@
-export interface RaceResultDB extends RaceResult {
-  id: string;
-}
+import { RacesResult, RaceResult } from '../xata';
 
-export interface RaceResult {
-  track: string;
-  date: string;
-  winner: string;
-  team: string;
-  laps: number;
-  time: string;
-}
-
-export type RaceResultKeys = keyof RaceResultDB;
+export type RaceResultKeys = keyof RacesResult;
 
 export const raceResultKeys: RaceResultKeys[] = ['id', 'track', 'date', 'winner', 'team', 'laps', 'time'];
 
-
-export interface RaceResultDetail {
-  position: number;
-  driverNumber: number;
-  driver: string;
-  team: string;
-  laps: number;
-  timeOrRetired: string;
-  points: number;
-  year: number;
-  place: string;
-}
-
-export interface RaceResultDetailDB extends RaceResultDetail {
-  id: string;
-}
-
-export type RaceResultDetailKeys = keyof RaceResultDetailDB;
+export type RaceResultDetailKeys = keyof RaceResult;
 
 export const raceResultDetailKeys: RaceResultDetailKeys[] = [
   'id',

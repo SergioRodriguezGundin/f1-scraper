@@ -1,4 +1,3 @@
-import { Category } from '../utils/globals';
 
 export interface Extractor<T> {
   f1Object: T;

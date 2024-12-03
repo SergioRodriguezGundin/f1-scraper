@@ -1,17 +1,6 @@
-export interface DriverDB extends Driver {
-  id: string;
-}
+import { Driver } from "../xata";
 
-export interface Driver {
-  position: number;
-  name: string;
-  nationality: string;
-  team: string;
-  points: number;
-  image: string;
-}
-
-export type DriverKeys = keyof DriverDB;
+export type DriverKeys = keyof Driver;
 
 export const driverKeys: DriverKeys[] = [
   'id',

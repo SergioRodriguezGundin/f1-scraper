@@ -4,15 +4,12 @@ import { addRaceResult } from './db/race';
 import { addRacesResults } from './db/races';
 import { addSchedule } from './db/schedule';
 import { addTeams } from './db/team';
-import { Driver } from './interfaces/driver.interface';
-import { RaceResult, RaceResultDetail } from './interfaces/race.interface';
-import { Team } from './interfaces/team.interface';
 import { getDrivers } from './scraper/drivers';
 import { getRace } from './scraper/race';
 import { getRaces } from './scraper/races';
 import { getSchedule } from './scraper/schedule';
 import { getTeams } from './scraper/teams';
-import { Schedule } from './xata';
+import { Driver, RacesResult, RaceResult, Schedule, Team } from './xata';
 
 const app = new Hono();
 
@@ -35,7 +32,7 @@ app.get("/drivers", async (c: Context) => {
 
 app.get("/races", async (c: Context) => {
 	try {
-		const races: RaceResult[] = await getRaces(c.env);
+		const races: RacesResult[] = await getRaces(c.env);
 		// add races to database
 		await addRacesResults(c.env, races);
 
@@ -50,7 +47,7 @@ app.get("/races", async (c: Context) => {
 
 app.get('/race/:id', async (c: Context) => {
 	try {
-		const raceResult: RaceResultDetail[] = await getRace(c.env, c.req.param('id'));
+		const raceResult: RaceResult[] = await getRace(c.env, c.req.param('id'));
 		// add race to database
 		await addRaceResult(c.env, c.req.param('id'), raceResult);
 
