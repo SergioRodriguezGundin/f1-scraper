@@ -1,54 +1,50 @@
-import { CheerioAPI, load } from 'cheerio';
-import { Schedule } from '../interfaces/schedule.interface';
+import { Cheerio, CheerioAPI, Element, load } from 'cheerio';
 import { F1_URL, F1_YEAR, RACING } from '../utils/globals';
+import { Schedule } from '../xata';
 
 export const getSchedule = async (): Promise<Schedule[]> => {
-  const url = `${F1_URL}/${RACING}/${F1_YEAR}.html`;
+  const url = `${F1_URL}/${RACING}/${F1_YEAR}`;
 
   try {
     const response = await fetch(url);
     const html = await response.text();
 
     const $: CheerioAPI = load(html);
-    const schedule: Schedule[] = [];
+    let schedule: Schedule[] = [];
 
-    $('div.col-12.col-sm-6.col-lg-4.col-xl-3').each((index, element): void => {
-      const fieldset = $(element).find('.event-item');
-      const legendText = fieldset.find('.card-title').text();
+    $('div.flex.flex-col.tablet\\:grid > a').each((_, element) => {
+      const $el = $(element);
 
-      if (legendText !== 'TESTING') {
-        const race_status = fieldset.find('.card-title > .race-status').text();
+      const headerContainer = '.f1-inner-wrapper:first > div:first';
+      const bodyContainer = '.f1-inner-wrapper:first > div:last';
 
-        const container = $(element).find('div.container > div.row');
+      const round = $el.find('legend > p').text().trim();
+      const date = $el.find(`${headerContainer} > div:first > p > span`).text().trim();
+      const month = $el.find(`${headerContainer} > div:nth-child(2) > p > span`).text().trim();
+      const flag = $el.find(`${headerContainer} > div:first > img`).attr('src');
+      const place = $el.find(`${bodyContainer} > div:first > p`).text().trim();
+      const title = $el.find(`${bodyContainer} > div:nth-child(2) > p`).text().trim();
+      const trackImg = $el.find(`${bodyContainer} > div:last > img`).attr('src');
 
-        const race_card = container.find('.race-card');
-        const event_info = race_card.find('.event-info');
-        const date = event_info.find('.start-date').text() + ' - ' + event_info.find('.end-date').text();
-        const month = event_info.find('.month-wrapper').text();
-        const countryFlag = event_info.find('.country-flag > picture > img').attr('data-src');
-
-        const event = race_card.find('.event-details');
-        const event_place = event.find('.event-place').text().trim();
-        const event_title = event.find('.event-title').text();
-        const event_image = event.find('.event-image > picture > img').attr('data-src');
-
-        const race_card_hero = container.find('.race-card-hero');
-        const hero_image = race_card_hero.find('.hero-image > picture > img').attr('data-src');
-
-        const schedule_item: Schedule = {
-          round: legendText,
-          race_status: race_status,
-          date: date,
-          month: month,
-          country_flag: countryFlag ?? '',
-          place: event_place,
-          title: event_title,
-          track_image: event_image ?? '',
-          hero_image: hero_image ?? '',
-          year: Number(F1_YEAR)
-        }
-        schedule.push(schedule_item);
+      let podium: Schedule['firstPlace'][] = [];
+      if (!trackImg) {
+        podium = addPodium($el, bodyContainer);
       }
+
+      schedule.push({
+        round,
+        days: date,
+        month,
+        flag: flag ?? '',
+        place,
+        title,
+        trackImage: trackImg ?? '',
+        year: Number(F1_YEAR),
+        firstPlace: podium[0],
+        secondPlace: podium[1],
+        thirdPlace: podium[2],
+        id: crypto.randomUUID()
+      });
     });
 
     return schedule;
@@ -58,8 +54,31 @@ export const getSchedule = async (): Promise<Schedule[]> => {
     }
     throw new Error("An unknown error occurred");
   }
+};
 
+const addPodium = ($el: Cheerio<Element>, bodyContainer: string): Schedule['firstPlace'][] => {
+  const firstPlaceDriverImage = $el.find(`${bodyContainer} > div:last > div:first > div:first > div:first > div:first > img`).attr('src');
+  const firstPlaceDriverName = $el.find(`${bodyContainer} > div:last > div:first > div:first > div:last > p`).text().trim();
 
-  return [];
+  const secondPlaceDriverImage = $el.find(`${bodyContainer} > div:last > div:nth-child(2) > div:first > div:first > div:first > img`).attr('src');
+  const secondPlaceDriverName = $el.find(`${bodyContainer} > div:last > div:nth-child(2) > div:first > div:last > p`).text().trim();
+
+  const thirdPlaceDriverImage = $el.find(`${bodyContainer} > div:last > div:last > div:first > div:first > div:first > img`).attr('src');
+  const thirdPlaceDriverName = $el.find(`${bodyContainer} > div:last > div:last > div:first > div:last > p`).text().trim();
+
+  return [
+    {
+      driverImage: firstPlaceDriverImage ?? '',
+      driverName: firstPlaceDriverName ?? ''
+    },
+    {
+      driverImage: secondPlaceDriverImage ?? '',
+      driverName: secondPlaceDriverName ?? ''
+    },
+    {
+      driverImage: thirdPlaceDriverImage ?? '',
+      driverName: thirdPlaceDriverName ?? ''
+    }
+  ]
 };
 

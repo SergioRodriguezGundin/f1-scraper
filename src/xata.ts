@@ -39,26 +39,6 @@ const tables = [
     ],
   },
   {
-    name: "Schedule",
-    columns: [
-      { name: "round", type: "string", notNull: true, defaultValue: " " },
-      { name: "race_status", type: "string", notNull: true, defaultValue: " " },
-      { name: "month", type: "string", notNull: true, defaultValue: " " },
-      {
-        name: "country_flag",
-        type: "string",
-        notNull: true,
-        defaultValue: " ",
-      },
-      { name: "place", type: "string", notNull: true, defaultValue: " " },
-      { name: "title", type: "string", notNull: true, defaultValue: " " },
-      { name: "track_image", type: "string", notNull: true, defaultValue: " " },
-      { name: "hero_image", type: "string", notNull: true, defaultValue: " " },
-      { name: "date", type: "string", notNull: true, defaultValue: " " },
-      { name: "year", type: "int", notNull: true, defaultValue: "2024" },
-    ],
-  },
-  {
     name: "Races_result",
     columns: [
       { name: "track", type: "string", notNull: true, defaultValue: " " },
@@ -83,6 +63,37 @@ const tables = [
       { name: "place", type: "string", notNull: true, defaultValue: " " },
     ],
   },
+  {
+    name: "Schedule",
+    columns: [
+      { name: "round", type: "text", notNull: true, defaultValue: " " },
+      { name: "days", type: "text", notNull: true, defaultValue: " " },
+      { name: "month", type: "text", notNull: true, defaultValue: " " },
+      { name: "flag", type: "text", notNull: true, defaultValue: " " },
+      { name: "place", type: "text", notNull: true, defaultValue: " " },
+      { name: "title", type: "text", notNull: true, defaultValue: " " },
+      { name: "trackImage", type: "text" },
+      {
+        name: "firstPlace",
+        type: "json",
+        defaultValue:
+          '{\r\n    "driverImage": "",\r\n    "driverName": ""\r\n}',
+      },
+      {
+        name: "secondPlace",
+        type: "json",
+        defaultValue:
+          '{\r\n    "driverImage": "",\r\n    "driverName": ""\r\n}',
+      },
+      {
+        name: "thirdPlace",
+        type: "json",
+        defaultValue:
+          '{\r\n    "driverImage": "",\r\n    "driverName": ""\r\n}',
+      },
+      { name: "year", type: "int", notNull: true, defaultValue: "2024" },
+    ],
+  },
 ] as const;
 
 export type SchemaTables = typeof tables;
@@ -94,21 +105,21 @@ export type DriverRecord = Driver & XataRecord;
 export type Team = InferredTypes["Team"];
 export type TeamRecord = Team & XataRecord;
 
-export type Schedule = InferredTypes["Schedule"];
-export type ScheduleRecord = Schedule & XataRecord;
-
 export type RacesResult = InferredTypes["Races_result"];
 export type RacesResultRecord = RacesResult & XataRecord;
 
 export type RaceResult = InferredTypes["Race_result"];
 export type RaceResultRecord = RaceResult & XataRecord;
 
+export type Schedule = InferredTypes["Schedule"];
+export type ScheduleRecord = Schedule & XataRecord;
+
 export type DatabaseSchema = {
   Driver: DriverRecord;
   Team: TeamRecord;
-  Schedule: ScheduleRecord;
   Races_result: RacesResultRecord;
   Race_result: RaceResultRecord;
+  Schedule: ScheduleRecord;
 };
 
 const DatabaseClient = buildClient();

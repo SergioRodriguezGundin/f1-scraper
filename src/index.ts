@@ -6,13 +6,13 @@ import { addSchedule } from './db/schedule';
 import { addTeams } from './db/team';
 import { Driver } from './interfaces/driver.interface';
 import { RaceResult, RaceResultDetail } from './interfaces/race.interface';
-import { Schedule } from './interfaces/schedule.interface';
 import { Team } from './interfaces/team.interface';
 import { getDrivers } from './scraper/drivers';
 import { getRace } from './scraper/race';
 import { getRaces } from './scraper/races';
 import { getSchedule } from './scraper/schedule';
 import { getTeams } from './scraper/teams';
+import { Schedule } from './xata';
 
 const app = new Hono();
 

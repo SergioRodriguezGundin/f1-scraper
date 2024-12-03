@@ -1,8 +1,8 @@
 import { Driver, DriverDB, DriverKeys, driverKeys } from '../../interfaces/driver.interface';
 import { RaceResultDB, RaceResultDetail, RaceResultDetailKeys, RaceResultKeys, raceResultKeys } from '../../interfaces/race.interface';
-import { Schedule, ScheduleDB, ScheduleKeys } from '../../interfaces/schedule.interface';
+import { ScheduleKeys } from '../../interfaces/schedule.interface';
 import { Team, TeamDB, TeamKeys, teamKeys } from '../../interfaces/team.interface';
-import { XataClient } from '../../xata';
+import { Schedule, XataClient } from '../../xata';
 import { DBClient } from './client.interface';
 
 export class DBXataClient implements DBClient {
@@ -103,7 +103,8 @@ export class DBXataClient implements DBClient {
       console.error('Error creating races results: ', error);
     }
   }
-  public async getScheduleRace(keys: ScheduleKeys[], values: any[]): Promise<ScheduleDB | null> {
+
+  public async getScheduleRace(keys: ScheduleKeys[], values: any[]): Promise<Schedule | null> {
     const filterObject = keys.reduce((obj, key, index) => {
       obj[key] = values[index];
       return obj;
@@ -115,7 +116,7 @@ export class DBXataClient implements DBClient {
       return null;
     }
 
-    return scheduleRecord as unknown as ScheduleDB;
+    return scheduleRecord as unknown as Schedule;
   }
 
   public async addSchedule(schedule: Schedule[]): Promise<void> {
