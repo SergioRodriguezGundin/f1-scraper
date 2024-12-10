@@ -1,9 +1,9 @@
-import { DriverDB } from '../interfaces/driver.interface';
-import { RaceResult, RaceResultDB } from '../interfaces/race/race.interface';
-import { TeamDB } from '../interfaces/team.interface';
+import { Driver } from '../xata';
+import { RacesResult } from '../xata';
+import { Team } from '../xata';
 import { DBXataClient } from './client/xata';
 
-export const addRacesResults = async (env: Env, races: RaceResult[]): Promise<void> => {
+export const addRacesResults = async (env: Env, races: RacesResult[]): Promise<void> => {
   const xata = DBXataClient.getInstance(env);
 
   const teams = await xata.getTeams();
@@ -16,8 +16,8 @@ export const addRacesResults = async (env: Env, races: RaceResult[]): Promise<vo
   await xata.addRacesResults(racesResultsToAdd);
 };
 
-const mergeRaceResults = (races: RaceResult[], dbRaces: RaceResultDB[]): RaceResultDB[] => {
-  return races.map((raceResult: RaceResult) => {
+const mergeRaceResults = (races: RacesResult[], dbRaces: RacesResult[]): RacesResult[] => {
+  return races.map((raceResult: RacesResult) => {
     const racesMap = new Map(dbRaces.map(race => [race.track, race]));
 
     const existingRace = racesMap.get(raceResult.track);
@@ -35,19 +35,19 @@ const mergeRaceResults = (races: RaceResult[], dbRaces: RaceResultDB[]): RaceRes
   });
 }
 
-const composeRaces = (races: RaceResult[], drivers: DriverDB[], teams: TeamDB[]): RaceResult[] => {
-  return races.map((race: RaceResult) => {
-    const driverMap = new Map(drivers.map(driver => [driver.name, driver.id]));
-    const teamMap = new Map(teams.map(team => [team.name, team.id]));
+const composeRaces = (races: RacesResult[], drivers: Driver[], teams: Team[]): RacesResult[] => {
+  return races.map((race: RacesResult) => {
+    const driverMap = new Map(drivers.map(driver => [driver.name, driver]));
+    const teamMap = new Map(teams.map(team => [team.name, team]));
 
-    const driverId = driverMap.get(race.winner) ?? '';
-    const teamId = teamMap.get(race.team) ?? '';
+    const driverId = driverMap.get(race.winner?.name ?? '') ?? '';
+    const teamId = teamMap.get(race.team?.name ?? '') ?? '';
 
     return {
       ...race,
       winner: driverId,
       team: teamId,
-    };
+    } as RacesResult;
   });
 }
 

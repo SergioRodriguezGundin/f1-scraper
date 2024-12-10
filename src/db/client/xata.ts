@@ -96,7 +96,7 @@ export class DBXataClient implements DBClient {
     }
   }
 
-  public async addRacesResults(races: RaceResult[]): Promise<void> {
+  public async addRacesResults(races: RacesResult[]): Promise<void> {
     try {
       await this.client.db.Races_result.createOrReplace(races);
     } catch (error) {
@@ -140,7 +140,7 @@ export class DBXataClient implements DBClient {
     return raceResult as unknown as RaceResult;
   }
 
-  public async addRaceResult(raceResults: RacesResult[]): Promise<void> {
+  public async addRaceResult(raceResults: RaceResult[]): Promise<void> {
     try {
       await this.client.db.Race_result.create(raceResults);
     } catch (error) {

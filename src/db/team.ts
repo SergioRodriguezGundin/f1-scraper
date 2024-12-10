@@ -1,4 +1,5 @@
-import { Team, TeamDB, TeamKeys } from '../interfaces/team.interface';
+import { TeamKeys } from '../interfaces/team.interface';
+import { Team } from '../xata';
 import { DBXataClient } from './client/xata';
 
 
@@ -11,13 +12,13 @@ export const addTeams = async (env: Env, teams: Team[]) => {
   await xata.addTeams(teamsMerged);
 };
 
-export const getTeams = async (env: Env, keys: TeamKeys[]): Promise<TeamDB[]> => {
+export const getTeams = async (env: Env, keys: TeamKeys[]): Promise<Team[]> => {
   const xata = DBXataClient.getInstance(env);
   return await xata.getTeams(keys);
 };
 
-const mergeTeams = (teams: Team[], teamsDB: TeamDB[]): TeamDB[] => {
-  const teamsDBMap = new Map(teamsDB.map((teamDB: TeamDB) => [teamDB.name, teamDB]));
+const mergeTeams = (teams: Team[], teamsDB: Team[]): Team[] => {
+  const teamsDBMap = new Map(teamsDB.map((teamDB: Team) => [teamDB.name, teamDB]));
 
   return teams.map((team: Team) => {
     const teamDB = teamsDBMap.get(team.name);

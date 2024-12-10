@@ -1,7 +1,6 @@
-import { Driver, DriverDB } from '../interfaces/driver.interface';
-import { TeamDB } from '../interfaces/team.interface';
+import { Driver } from '../xata';
+import { Team } from '../xata';
 import { DBXataClient } from './client/xata';
-
 
 export const addDrivers = async (env: Env, drivers: Driver[]): Promise<void> => {
   const xata = DBXataClient.getInstance(env);
@@ -16,9 +15,9 @@ export const addDrivers = async (env: Env, drivers: Driver[]): Promise<void> => 
   await xata.addDrivers(driversMerged);
 };
 
-const mergeDrivers = (drivers: Driver[], driversDB: DriverDB[]): DriverDB[] => {
+const mergeDrivers = (drivers: Driver[], driversDB: Driver[]): Driver[] => {
   return drivers.map((driver: Driver) => {
-    const driversDBMap = new Map(driversDB.map((driverDB: DriverDB) => [driverDB.name, driverDB]));
+    const driversDBMap = new Map(driversDB.map((driverDB: Driver) => [driverDB.name, driverDB]));
 
     const existingDriver = driversDBMap.get(driver.name);
     if (!existingDriver) {
@@ -30,13 +29,13 @@ const mergeDrivers = (drivers: Driver[], driversDB: DriverDB[]): DriverDB[] => {
 };
 
 
-const composeDrivers = (drivers: Driver[], teams: TeamDB[]): Driver[] => {
-  const teamMap = new Map(teams.map((team: TeamDB) => [team.name, team]));
+const composeDrivers = (drivers: Driver[], teams: Team[]): Driver[] => {
+  const teamMap = new Map(teams.map((team: Team) => [team.name, team]));
 
   return drivers.map((driver: Driver) => {
-    const team = teamMap.get(driver.team);
+    const team = teamMap.get(driver.team?.name ?? '');
 
-    return { ...driver, team: team?.id ?? '' };
+    return { ...driver, team } as Driver;
   });
 };
 

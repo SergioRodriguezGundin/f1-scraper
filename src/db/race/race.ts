@@ -1,10 +1,10 @@
-import { RaceResultDetail } from '../../interfaces/race/race.interface';
+import { RaceResult } from '../../xata';
 import { getRacePlace } from '../../utils/globals';
 import { DBXataClient } from '../client/xata';
 
-export const addRaceResult = async (env: Env, raceId: string, raceResults: RaceResultDetail[]) => {
+export const addRaceResult = async (env: Env, raceId: string, raceResults: RaceResult[]) => {
   const xata = DBXataClient.getInstance(env);
-  const raceResultsDB: RaceResultDetail[] = [];
+  const raceResultsDB: RaceResult[] = [];
 
   const place = getRacePlace(raceId);
 
@@ -15,10 +15,10 @@ export const addRaceResult = async (env: Env, raceId: string, raceResults: RaceR
     ]);
 
     if (driver && team && place) {
-      const race: RaceResultDetail = {
+      const race: RaceResult = {
         ...raceResult,
-        driver: driver.id,
-        team: team.id,
+        driver: driver as RaceResult['driver'],
+        team: team as RaceResult['team'],
         place,
       }
       raceResultsDB.push(race);

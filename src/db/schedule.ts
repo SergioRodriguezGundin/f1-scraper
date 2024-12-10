@@ -1,4 +1,4 @@
-import { Schedule } from '../interfaces/schedule.interface';
+import { Schedule } from '../xata';
 import { DBXataClient } from './client/xata';
 
 export const addSchedule = async (env: Env, schedule: Schedule[]): Promise<void> => {
