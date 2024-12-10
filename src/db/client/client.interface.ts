@@ -1,5 +1,5 @@
 import { Driver, DriverDB, DriverKeys } from '../../interfaces/driver.interface';
-import { RaceResult, RaceResultDB, RaceResultDetail, RaceResultDetailKeys, RaceResultKeys } from '../../interfaces/race.interface';
+import { RaceResult, RaceResultDB, RaceResultDetail, RaceResultDetailKeys, RaceResultKeys } from '../../interfaces/race/race.interface';
 import { Schedule, ScheduleDB, ScheduleKeys } from '../../interfaces/schedule.interface';
 import { Team, TeamDB, TeamKeys } from '../../interfaces/team.interface';
 

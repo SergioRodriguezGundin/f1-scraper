@@ -1,4 +1,4 @@
-import { RacesResult, RaceResult } from '../xata';
+import { RacesResult, RaceResult } from '../../xata';
 
 export const raceModel: RacesResult = {
   id: '',

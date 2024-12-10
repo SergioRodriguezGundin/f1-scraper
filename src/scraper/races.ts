@@ -1,5 +1,5 @@
 import { Extractor } from '../interfaces/extractor.interface';
-import { raceModel } from '../models/race.model';
+import { raceModel } from '../models/race/race.model';
 import { extractElement } from '../utils/extractor';
 import { F1_URL, F1_YEAR, RACES, RESULTS } from '../utils/globals';
 import { RacesResult } from '../xata';

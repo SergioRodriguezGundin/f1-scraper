@@ -1,4 +1,4 @@
-import { RaceResultDetail } from '../interfaces/race.interface';
+import { RaceResultDetail } from '../interfaces/race/race.interface';
 import { getRacePlace } from '../utils/globals';
 import { DBXataClient } from './client/xata';
 

@@ -1,5 +1,5 @@
 import { Extractor } from '../interfaces/extractor.interface';
-import { teamModel } from '../models/team.interface';
+import { teamModel } from '../models/team.model';
 import { extractElement } from '../utils/extractor';
 import { F1_URL, F1_YEAR, RESULTS, TEAMS } from '../utils/globals';
 import { Team } from '../xata';

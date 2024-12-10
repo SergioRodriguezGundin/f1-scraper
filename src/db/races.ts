@@ -1,5 +1,5 @@
 import { DriverDB } from '../interfaces/driver.interface';
-import { RaceResult, RaceResultDB } from '../interfaces/race.interface';
+import { RaceResult, RaceResultDB } from '../interfaces/race/race.interface';
 import { TeamDB } from '../interfaces/team.interface';
 import { DBXataClient } from './client/xata';
 

@@ -1,5 +1,5 @@
 import { DriverKeys, driverKeys } from '../../interfaces/driver.interface';
-import { RaceResultDetailKeys, RaceResultKeys, raceResultKeys } from '../../interfaces/race.interface';
+import { RaceResultDetailKeys, RaceResultKeys, raceResultKeys } from '../../interfaces/race/race.interface';
 import { ScheduleKeys } from '../../interfaces/schedule.interface';
 import { TeamKeys, teamKeys } from '../../interfaces/team.interface';
 import { Driver, RaceResult, RacesResult, Schedule, Team, XataClient } from '../../xata';
