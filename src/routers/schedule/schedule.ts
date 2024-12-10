@@ -1,7 +1,7 @@
 import { Context, Hono } from 'hono';
-import { Schedule } from '../../xata';
-import { getSchedule } from '../../scraper/schedule';
 import { addSchedule } from '../../db/schedule';
+import { getSchedule } from '../../scraper/schedule';
+import { Schedule } from '../../xata';
 
 export function scheduleRouter(app: Hono) {
   app.get('/schedule', async (c: Context) => {

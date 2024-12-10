@@ -1,10 +1,10 @@
 import { Extractor } from '../interfaces/extractor.interface';
-import { RaceResultDetail } from '../interfaces/race.interface';
 import { raceResultDetailModel } from '../models/race.model';
 import { extractElement } from '../utils/extractor';
 import { F1_URL, F1_YEAR, RESULTS, getRaceResultUrl, racesMap } from '../utils/globals';
+import { RaceResult } from '../xata';
 
-export const getRace = async (env: Env, id: string): Promise<RaceResultDetail[]> => {
+export const getRace = async (env: Env, id: string): Promise<RaceResult[]> => {
   const race = racesMap.get(id);
 
   if (!race) {
@@ -18,12 +18,12 @@ export const getRace = async (env: Env, id: string): Promise<RaceResultDetail[]>
     const response = await fetch(url);
     const html = await response.text();
 
-    const raceDetail: RaceResultDetail = raceResultDetailModel;
-    const extractor: Extractor<RaceResultDetail> = {
+    const raceDetail: RaceResult = raceResultDetailModel;
+    const extractor: Extractor<RaceResult> = {
       f1Object: raceDetail,
       retrieveAdditionalData: setYear,
     };
-    const raceResults: RaceResultDetail[] = await extractElement<RaceResultDetail>(html, extractor, env);
+    const raceResults: RaceResult[] = await extractElement<RaceResult>(html, extractor, env);
 
     return raceResults;
   } catch (error) {
@@ -32,7 +32,7 @@ export const getRace = async (env: Env, id: string): Promise<RaceResultDetail[]>
   }
 }
 
-export const setYear = async (raceResultDetail: RaceResultDetail): Promise<void> => {
-  raceResultDetail.year = Number(F1_YEAR);
+export const setYear = async (raceResult: RaceResult): Promise<void> => {
+  raceResult.year = Number(F1_YEAR);
 }
 

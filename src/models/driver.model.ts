@@ -1,10 +1,11 @@
-import { Driver } from '../interfaces/driver.interface';
+import { Driver } from '../xata';
 
 export const driverModel: Driver = {
+  id: '',
   position: 0,
   name: '',
   nationality: '',
-  team: '',
+  team: null,
   points: 0,
   image: '',
 }

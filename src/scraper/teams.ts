@@ -1,8 +1,8 @@
 import { Extractor } from '../interfaces/extractor.interface';
-import { Team } from '../interfaces/team.interface';
 import { teamModel } from '../models/team.interface';
 import { extractElement } from '../utils/extractor';
 import { F1_URL, F1_YEAR, RESULTS, TEAMS } from '../utils/globals';
+import { Team } from '../xata';
 
 export const getTeams = async (env: Env): Promise<Team[]> => {
   const url = `${F1_URL}/${RESULTS}/${F1_YEAR}/${TEAMS}`;

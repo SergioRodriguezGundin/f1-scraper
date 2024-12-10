@@ -1,8 +1,8 @@
-import { Driver } from '../interfaces/driver.interface';
 import { Extractor } from '../interfaces/extractor.interface';
 import { driverModel } from '../models/driver.model';
 import { extractElement } from '../utils/extractor';
 import { DRIVERS, F1_URL, F1_YEAR, RESULTS } from '../utils/globals';
+import { Driver } from '../xata';
 
 export const getDrivers = async (env: Env): Promise<Driver[]> => {
   const url = `${F1_URL}/${RESULTS}/${F1_YEAR}/${DRIVERS}`;

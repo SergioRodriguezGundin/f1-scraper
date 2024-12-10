@@ -1,10 +1,9 @@
-import { Context } from 'hono';
-import { Hono } from 'hono';
-import { getRaces } from '../../scraper/races';
-import { RaceResult, RacesResult } from '../../xata';
+import { Context, Hono } from 'hono';
+import { addRaceResult } from '../../db/race';
 import { addRacesResults } from '../../db/races';
 import { getRace } from '../../scraper/race';
-import { addRaceResult } from '../../db/race';
+import { getRaces } from '../../scraper/races';
+import { RaceResult, RacesResult } from '../../xata';
 
 export function racesRouter(app: Hono) {
   app.get("/races", async (c: Context) => {

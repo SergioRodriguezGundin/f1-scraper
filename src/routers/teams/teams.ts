@@ -1,7 +1,7 @@
 import { Context, Hono } from 'hono';
+import { addTeams } from '../../db/team';
 import { getTeams } from '../../scraper/teams';
 import { Team } from '../../xata';
-import { addTeams } from '../../db/team';
 
 export function teamsRouter(app: Hono) {
   app.get('/teams', async (c: Context) => {

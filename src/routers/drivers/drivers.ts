@@ -1,5 +1,4 @@
-import { Hono } from "hono";
-import { Context } from "hono";
+import { Context, Hono } from "hono";
 import { addDrivers } from '../../db/drivers';
 import { getDrivers } from '../../scraper/drivers';
 import { Driver } from '../../xata';

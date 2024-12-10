@@ -1,19 +1,21 @@
-import { RaceResult, RaceResultDetail } from '../interfaces/race.interface';
+import { RacesResult, RaceResult } from '../xata';
 
-export const raceModel: RaceResult = {
+export const raceModel: RacesResult = {
+  id: '',
   track: '',
   date: '',
-  winner: '',
-  team: '',
+  winner: null,
+  team: null,
   laps: 0,
   time: '',
 }
 
-export const raceResultDetailModel: RaceResultDetail = {
+export const raceResultDetailModel: RaceResult = {
+  id: '',
   position: 0,
   driverNumber: 0,
-  driver: '',
-  team: '',
+  driver: null,
+  team: null,
   laps: 0,
   timeOrRetired: '',
   points: 0,
