@@ -1,8 +1,9 @@
 import { Extractor } from '../interfaces/extractor.interface';
+import { raceFastestLapsModel } from '../models/race/fastestLaps.model';
 import { raceResultDetailModel } from '../models/race/race.model';
 import { extractElement } from '../utils/extractor';
 import { F1_URL, F1_YEAR, RESULTS, getFastestLapsUrl, getPitStopsUrl, getPracticeOneUrl, getPracticeThreeUrl, getPracticeTwoUrl, getQualifyingUrl, getRaceResultUrl, getStartingGridUrl, racesMap } from '../utils/globals';
-import { RaceResult } from '../xata';
+import { RaceFastestLaps, RaceResult } from '../xata';
 
 export const getRace = async (env: Env, id: string): Promise<RaceResult[]> => {
   const race = racesMap.get(id);
@@ -32,7 +33,7 @@ export const getRace = async (env: Env, id: string): Promise<RaceResult[]> => {
   }
 }
 
-export const fastestLaps = async (env: Env, id: string): Promise<void> => {
+export const fastestLaps = async (env: Env, id: string): Promise<RaceFastestLaps[]> => {
   const race = racesMap.get(id);
 
   if (!race) {
@@ -46,6 +47,14 @@ export const fastestLaps = async (env: Env, id: string): Promise<void> => {
     const response = await fetch(url);
     const html = await response.text();
 
+    const raceFastestLaps: RaceFastestLaps = raceFastestLapsModel;
+    const extractor: Extractor<RaceFastestLaps> = {
+      f1Object: raceFastestLaps,
+      retrieveAdditionalData: setYear,
+    };
+    const raceFastestLapsResult: RaceFastestLaps[] = await extractElement<RaceFastestLaps>(html, extractor, env);
+
+    return raceFastestLapsResult;
   } catch (error) {
     console.error(error);
     throw new Error("Failed to fetch fastest laps data");
@@ -166,7 +175,7 @@ export const practiceThree = async (env: Env, id: string): Promise<void> => {
   }
 }
 
-const setYear = async (raceResult: RaceResult): Promise<void> => {
+const setYear = async (raceResult: RaceResult | RaceFastestLaps): Promise<void> => {
   raceResult.year = Number(F1_YEAR);
 }
 
