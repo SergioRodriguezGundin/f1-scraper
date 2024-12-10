@@ -1,9 +1,9 @@
 import { Context, Hono } from 'hono';
-import { addRaceResult } from '../../db/race';
+import { addRaceResult } from '../../db/race/race';
 import { addRacesResults } from '../../db/races';
-import { getRace } from '../../scraper/race';
+import { fastestLaps, getRace } from '../../scraper/race';
 import { getRaces } from '../../scraper/races';
-import { RaceResult, RacesResult } from '../../xata';
+import { RaceFastestLaps, RaceResult, RacesResult } from '../../xata';
 
 export function racesRouter(app: Hono) {
   app.get("/races", async (c: Context) => {
@@ -26,6 +26,20 @@ export function racesRouter(app: Hono) {
       await addRaceResult(c.env, c.req.param('id'), raceResult);
 
       return c.json(raceResult);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return c.text(error.message, 500);
+      }
+      return c.text("An unknown error occurred", 500);
+    }
+  })
+
+  app.get('/race/:id/fastest-laps', async (c: Context) => {
+    try {
+      const raceFastestLaps: RaceFastestLaps[] = await fastestLaps(c.env, c.req.param('id'));
+      //await addFastestLaps(c.env, c.req.param('id'), raceFastestLaps);
+
+      return c.json(raceFastestLaps);
     } catch (error: unknown) {
       if (error instanceof Error) {
         return c.text(error.message, 500);
