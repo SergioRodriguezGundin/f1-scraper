@@ -2,7 +2,7 @@ import { DriverKeys, driverKeys } from '../../interfaces/driver.interface';
 import { RaceResultDetailKeys, RaceResultKeys, raceResultKeys } from '../../interfaces/race/race.interface';
 import { ScheduleKeys } from '../../interfaces/schedule.interface';
 import { TeamKeys, teamKeys } from '../../interfaces/team.interface';
-import { Driver, RaceResult, RacesResult, Schedule, Team, XataClient } from '../../xata';
+import { Driver, RaceFastestLaps, RaceResult, RacesResult, Schedule, Team, XataClient } from '../../xata';
 import { DBClient } from './client.interface';
 
 export class DBXataClient implements DBClient {
@@ -145,6 +145,14 @@ export class DBXataClient implements DBClient {
       await this.client.db.Race_result.create(raceResults);
     } catch (error) {
       console.error('Error creating race results: ', error);
+    }
+  }
+
+  public async addRaceFastestLaps(raceFastestLaps: RaceFastestLaps[]): Promise<void> {
+    try {
+      await this.client.db.Race_fastest_laps.create(raceFastestLaps);
+    } catch (error) {
+      console.error('Error creating race fastest laps: ', error);
     }
   }
 }

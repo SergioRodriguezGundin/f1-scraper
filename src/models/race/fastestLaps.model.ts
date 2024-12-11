@@ -8,4 +8,5 @@ export const raceFastestLapsModel: RaceFastestLaps = {
   lap: 0,
   time: '',
   avgSpeed: '',
+  year: 2024
 };
