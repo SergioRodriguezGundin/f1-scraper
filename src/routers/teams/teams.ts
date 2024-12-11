@@ -1,12 +1,12 @@
 import { Context, Hono } from 'hono';
 import { addTeams } from '../../db/team';
 import { getTeams } from '../../scraper/teams';
-import { Team } from '../../xata';
+import { TeamData } from '../../models/team.model';
 
 export function teamsRouter(app: Hono) {
   app.get('/teams', async (c: Context) => {
     try {
-      const teams: Team[] = await getTeams(c.env);
+      const teams: TeamData[] = await getTeams(c.env);
       await addTeams(c.env, teams);
 
       return c.json(teams);

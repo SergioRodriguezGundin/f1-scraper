@@ -1,7 +1,7 @@
 import { Team } from '../xata';
 
-export const teamModel: Team = {
-  id: '',
+export type TeamData = Omit<Team, 'id'>;
+export const teamModel: TeamData = {
   position: 0,
   name: '',
   points: 0,

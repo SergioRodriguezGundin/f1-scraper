@@ -1,21 +1,20 @@
 import { Extractor } from '../interfaces/extractor.interface';
-import { teamModel } from '../models/team.model';
+import { TeamData, teamModel } from '../models/team.model';
 import { extractElement } from '../utils/extractor';
 import { F1_URL, F1_YEAR, RESULTS, TEAMS } from '../utils/globals';
-import { Team } from '../xata';
 
-export const getTeams = async (env: Env): Promise<Team[]> => {
+export const getTeams = async (env: Env): Promise<TeamData[]> => {
   const url = `${F1_URL}/${RESULTS}/${F1_YEAR}/${TEAMS}`;
   try {
     const response = await fetch(url);
     const html = await response.text();
 
-    const team: Team = teamModel;
-    const extractor: Extractor<Team> = {
+    const team: TeamData = teamModel;
+    const extractor: Extractor<TeamData> = {
       f1Object: team,
       retrieveAdditionalData: setTeamImage
     };
-    const teams: Team[] = await extractElement<Team>(html, extractor, env);
+    const teams: TeamData[] = await extractElement<TeamData>(html, extractor, env);
 
     return teams.sort((a, b) => a.position - b.position);
   } catch (error) {
@@ -24,7 +23,7 @@ export const getTeams = async (env: Env): Promise<Team[]> => {
   }
 }
 
-export const setTeamImage = async (team: Team, env: Env) => {
+export const setTeamImage = async (team: TeamData, env: Env) => {
   const teamNameToSearch = team.name.replace(/\s+/g, '_');
   const teamImage = await env.F1_ASSETS.get(teamNameToSearch);
   const teamIcon = await env.F1_ASSETS.get(`${teamNameToSearch}_icon`);
