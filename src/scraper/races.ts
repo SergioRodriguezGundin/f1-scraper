@@ -1,20 +1,19 @@
 import { Extractor } from '../interfaces/extractor.interface';
-import { raceModel } from '../models/race/race.model';
+import { raceModel, RacesResultData } from '../models/race/race.model';
 import { extractElement } from '../utils/extractor';
 import { F1_URL, F1_YEAR, RACES, RESULTS } from '../utils/globals';
-import { RacesResult } from '../xata';
 
-export const getRaces = async (env: Env): Promise<RacesResult[]> => {
+export const getRaces = async (env: Env): Promise<RacesResultData[]> => {
   const url = `${F1_URL}/${RESULTS}/${F1_YEAR}/${RACES}`;
   try {
     const response = await fetch(url);
     const html = await response.text();
-    const race: RacesResult = raceModel;
+    const race: RacesResultData = raceModel;
 
-    const extractor: Extractor<RacesResult> = {
+    const extractor: Extractor<RacesResultData> = {
       f1Object: race
     };
-    const races: RacesResult[] = await extractElement<RacesResult>(html, extractor, env);
+    const races: RacesResultData[] = await extractElement<RacesResultData>(html, extractor, env);
 
     return races;
   } catch (error) {

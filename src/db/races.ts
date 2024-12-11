@@ -1,9 +1,10 @@
+import { RacesResultData } from '../models/race/race.model';
 import { Driver } from '../xata';
 import { RacesResult } from '../xata';
 import { Team } from '../xata';
 import { DBXataClient } from './client/xata';
 
-export const addRacesResults = async (env: Env, races: RacesResult[]): Promise<void> => {
+export const addRacesResults = async (env: Env, races: RacesResultData[]): Promise<void> => {
   const xata = DBXataClient.getInstance(env);
 
   const teams = await xata.getTeams();
@@ -16,8 +17,8 @@ export const addRacesResults = async (env: Env, races: RacesResult[]): Promise<v
   await xata.addRacesResults(racesResultsToAdd);
 };
 
-const mergeRaceResults = (races: RacesResult[], dbRaces: RacesResult[]): RacesResult[] => {
-  return races.map((raceResult: RacesResult) => {
+const mergeRaceResults = (races: RacesResultData[], dbRaces: RacesResult[]): RacesResult[] => {
+  return races.map((raceResult: RacesResultData) => {
     const racesMap = new Map(dbRaces.map(race => [race.track, race]));
 
     const existingRace = racesMap.get(raceResult.track);
@@ -35,8 +36,8 @@ const mergeRaceResults = (races: RacesResult[], dbRaces: RacesResult[]): RacesRe
   });
 }
 
-const composeRaces = (races: RacesResult[], drivers: Driver[], teams: Team[]): RacesResult[] => {
-  return races.map((race: RacesResult) => {
+const composeRaces = (races: RacesResultData[], drivers: Driver[], teams: Team[]): RacesResultData[] => {
+  return races.map((race: RacesResultData) => {
     const driverMap = new Map(drivers.map(driver => [driver.name, driver]));
     const teamMap = new Map(teams.map(team => [team.name, team]));
 
@@ -47,7 +48,7 @@ const composeRaces = (races: RacesResult[], drivers: Driver[], teams: Team[]): R
       ...race,
       winner: driverId,
       team: teamId,
-    } as RacesResult;
+    } as RacesResultData;
   });
 }
 

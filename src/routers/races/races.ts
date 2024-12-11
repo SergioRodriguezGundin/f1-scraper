@@ -3,13 +3,13 @@ import { addFastestLaps, addRaceResult } from '../../db/race/race';
 import { addRacesResults } from '../../db/races';
 import { fastestLaps, getRace } from '../../scraper/race';
 import { getRaces } from '../../scraper/races';
-import { RaceFastestLaps, RaceResult, RacesResult } from '../../xata';
 import { RaceFastestLapsData } from '../../models/race/fastestLaps.model';
+import { RaceResultDetailData, RacesResultData } from '../../models/race/race.model';
 
 export function racesRouter(app: Hono) {
   app.get("/races", async (c: Context) => {
     try {
-      const races: RacesResult[] = await getRaces(c.env);
+      const races: RacesResultData[] = await getRaces(c.env);
       await addRacesResults(c.env, races);
 
       return c.json(races);
@@ -23,7 +23,7 @@ export function racesRouter(app: Hono) {
 
   app.get('/race/:id', async (c: Context) => {
     try {
-      const raceResult: RaceResult[] = await getRace(c.env, c.req.param('id'));
+      const raceResult: RaceResultDetailData[] = await getRace(c.env, c.req.param('id'));
       await addRaceResult(c.env, c.req.param('id'), raceResult);
 
       return c.json(raceResult);

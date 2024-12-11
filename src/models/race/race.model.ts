@@ -1,7 +1,7 @@
 import { RacesResult, RaceResult } from '../../xata';
 
-export const raceModel: RacesResult = {
-  id: '',
+export type RacesResultData = Omit<RacesResult, 'id'>;
+export const raceModel: RacesResultData = {
   track: '',
   date: '',
   winner: null,
@@ -10,8 +10,8 @@ export const raceModel: RacesResult = {
   time: '',
 }
 
-export const raceResultDetailModel: RaceResult = {
-  id: '',
+export type RaceResultDetailData = Omit<RaceResult, 'id'>;
+export const raceResultDetailModel: RaceResultDetailData = {
   position: 0,
   driverNumber: 0,
   driver: null,

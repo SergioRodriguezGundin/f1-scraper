@@ -2,10 +2,11 @@ import { RaceFastestLaps, RaceResult } from '../../xata';
 import { getRacePlace } from '../../utils/globals';
 import { DBXataClient } from '../client/xata';
 import { RaceFastestLapsData } from '../../models/race/fastestLaps.model';
+import { RaceResultDetailData } from '../../models/race/race.model';
 
-export const addRaceResult = async (env: Env, raceId: string, raceResults: RaceResult[]) => {
+export const addRaceResult = async (env: Env, raceId: string, raceResults: RaceResultDetailData[]) => {
   const xata = DBXataClient.getInstance(env);
-  const raceResultsDB: RaceResult[] = [];
+  const raceResultsDB: RaceResultDetailData[] = [];
 
   const place = getRacePlace(raceId);
 
@@ -16,7 +17,7 @@ export const addRaceResult = async (env: Env, raceId: string, raceResults: RaceR
     ]);
 
     if (driver && team && place) {
-      const race: RaceResult = {
+      const race: RaceResultDetailData = {
         ...raceResult,
         driver: driver as RaceResult['driver'],
         team: team as RaceResult['team'],
@@ -34,7 +35,7 @@ export const addRaceResult = async (env: Env, raceId: string, raceResults: RaceR
 
 export const addFastestLaps = async (env: Env, raceId: string, raceFastestLaps: RaceFastestLapsData[]) => {
   const xata = DBXataClient.getInstance(env);
-  const raceFastestLapsDB: RaceFastestLaps[] = [];
+  const raceFastestLapsDB: RaceFastestLapsData[] = [];
 
   const place = getRacePlace(raceId);
 
@@ -45,9 +46,8 @@ export const addFastestLaps = async (env: Env, raceId: string, raceFastestLaps: 
     ]);
 
     if (driver && team && place) {
-      const race: RaceFastestLaps = {
+      const race: RaceFastestLapsData = {
         ...raceFastestLap,
-        id: crypto.randomUUID(),
         driver: driver as RaceFastestLaps['driver'],
         team: team as RaceFastestLaps['team'],
         place
