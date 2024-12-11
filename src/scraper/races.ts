@@ -6,7 +6,6 @@ import { RacesResult } from '../xata';
 
 export const getRaces = async (env: Env): Promise<RacesResult[]> => {
   const url = `${F1_URL}/${RESULTS}/${F1_YEAR}/${RACES}`;
-  console.log('URL: ', url);
   try {
     const response = await fetch(url);
     const html = await response.text();

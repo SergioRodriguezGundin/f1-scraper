@@ -1,24 +1,24 @@
-import { Driver, DriverDB, DriverKeys } from '../../interfaces/driver.interface';
-import { RaceResult, RaceResultDB, RaceResultDetail, RaceResultDetailKeys, RaceResultKeys } from '../../interfaces/race/race.interface';
-import { Schedule, ScheduleDB, ScheduleKeys } from '../../interfaces/schedule.interface';
-import { Team, TeamDB, TeamKeys } from '../../interfaces/team.interface';
+import { DriverKeys } from '../../interfaces/driver.interface';
+import { RaceResultDetailKeys, RaceResultKeys } from '../../interfaces/race/race.interface';
+import { ScheduleKeys } from '../../interfaces/schedule.interface';
+import { TeamKeys } from '../../interfaces/team.interface';
+import { Driver, Team, RaceResult, Schedule, RacesResult } from '../../xata';
 
 export interface DBClient {
-  getDriver(keys: DriverKeys[], values: any[]): Promise<DriverDB | null>;
+  getDriver(keys: DriverKeys[], values: any[]): Promise<Driver | null>;
   addDrivers(drivers: Driver[]): Promise<void>;
-  getDrivers(keys: DriverKeys[]): Promise<DriverDB[]>;
+  getDrivers(keys: DriverKeys[]): Promise<Driver[]>;
 
-  getTeam(keys: TeamKeys[], values: any[]): Promise<TeamDB | null>;
+  getTeam(keys: TeamKeys[], values: any[]): Promise<Team | null>;
   addTeams(teams: Team[]): Promise<void>;
-  getTeams(keys: TeamKeys[]): Promise<TeamDB[]>;
+  getTeams(keys: TeamKeys[]): Promise<Team[]>;
 
-  getRacesResults(keys: RaceResultKeys[]): Promise<RaceResultDB[]>;
-  addRacesResults(races: RaceResult[]): Promise<void>;
+  getRacesResults(keys: RaceResultKeys[]): Promise<RacesResult[]>;
+  addRacesResults(races: RacesResult[]): Promise<void>;
 
-  getScheduleRace(keys: ScheduleKeys[], values: any[]): Promise<ScheduleDB | null>;
+  getScheduleRace(keys: ScheduleKeys[], values: any[]): Promise<Schedule | null>;
   addSchedule(schedule: Schedule[]): Promise<void>;
 
-  getRaceResult(keys: RaceResultDetailKeys[], values: any[]): Promise<RaceResultDB | null>;
-  addRaceResult(raceResults: RaceResultDetail[]): Promise<void>;
+  getRaceResult(keys: RaceResultDetailKeys[], values: any[]): Promise<RaceResult | null>;
+  addRaceResult(raceResults: RaceResult[]): Promise<void>;
 }
-

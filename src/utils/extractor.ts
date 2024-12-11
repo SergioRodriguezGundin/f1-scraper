@@ -1,5 +1,5 @@
 import { CheerioAPI, Element, load } from 'cheerio';
-import { Category, DRIVERS, RACES, TABLE_ELEMENT, TEAMS } from './globals';
+import { TABLE_ELEMENT } from './globals';
 import { Extractor } from '../interfaces/extractor.interface';
 
 /**

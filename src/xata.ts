@@ -108,6 +108,7 @@ const tables = [
       { name: "timeOfDay", type: "text" },
       { name: "avgSpeed", type: "text" },
       { name: "year", type: "int", notNull: true, defaultValue: "2024" },
+      { name: "place", type: "text", notNull: true, defaultValue: " " },
     ],
   },
 ] as const;
