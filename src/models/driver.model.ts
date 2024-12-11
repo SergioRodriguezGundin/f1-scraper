@@ -1,7 +1,7 @@
 import { Driver } from '../xata';
 
-export const driverModel: Driver = {
-  id: '',
+export type DriverData = Omit<Driver, 'id'>;
+export const driverModel: DriverData = {
   position: 0,
   name: '',
   nationality: '',

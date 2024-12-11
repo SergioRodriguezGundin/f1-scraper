@@ -1,22 +1,21 @@
 import { Extractor } from '../interfaces/extractor.interface';
-import { driverModel } from '../models/driver.model';
+import { DriverData, driverModel } from '../models/driver.model';
 import { extractElement } from '../utils/extractor';
 import { DRIVERS, F1_URL, F1_YEAR, RESULTS } from '../utils/globals';
-import { Driver } from '../xata';
 
-export const getDrivers = async (env: Env): Promise<Driver[]> => {
+export const getDrivers = async (env: Env): Promise<DriverData[]> => {
   const url = `${F1_URL}/${RESULTS}/${F1_YEAR}/${DRIVERS}`;
   try {
     const response = await fetch(url);
     const html = await response.text();
 
-    const driver: Driver = driverModel;
+    const driver: DriverData = driverModel;
 
-    const extractor: Extractor<Driver> = {
+    const extractor: Extractor<DriverData> = {
       f1Object: driver,
       retrieveAdditionalData: setDriverImage,
     };
-    const drivers: Driver[] = await extractElement<Driver>(html, extractor, env);
+    const drivers: DriverData[] = await extractElement<DriverData>(html, extractor, env);
 
     return drivers.sort((a, b) => a.position - b.position);
   } catch (error) {
@@ -25,7 +24,7 @@ export const getDrivers = async (env: Env): Promise<Driver[]> => {
   }
 }
 
-export const setDriverImage = async (driver: Driver, env: Env) => {
+export const setDriverImage = async (driver: DriverData, env: Env) => {
   const nameParts = driver.name.split(' ');
   const nationality = driver.nationality;
 

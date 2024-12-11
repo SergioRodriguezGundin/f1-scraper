@@ -1,12 +1,12 @@
 import { Context, Hono } from "hono";
 import { addDrivers } from '../../db/drivers';
 import { getDrivers } from '../../scraper/drivers';
-import { Driver } from '../../xata';
+import { DriverData } from '../../models/driver.model';
 
 export function driversRouter(app: Hono) {
     app.get("/drivers", async (c: Context) => {
         try {
-            const drivers: Driver[] = await getDrivers(c.env);
+            const drivers: DriverData[] = await getDrivers(c.env);
             await addDrivers(c.env, drivers);
 
             return c.json(drivers);
