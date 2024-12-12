@@ -2,6 +2,7 @@ import { DriverKeys } from '../../interfaces/driver.interface';
 import { RaceResultDetailKeys, RaceResultKeys } from '../../interfaces/race/race.interface';
 import { ScheduleKeys } from '../../interfaces/schedule.interface';
 import { TeamKeys } from '../../interfaces/team.interface';
+import { RacePitStopsData } from '../../models/race/pitStop.model';
 import { Driver, Team, RaceResult, Schedule, RacesResult } from '../../xata';
 
 export interface DBClient {
@@ -21,4 +22,6 @@ export interface DBClient {
 
   getRaceResult(keys: RaceResultDetailKeys[], values: any[]): Promise<RaceResult | null>;
   addRaceResult(raceResults: RaceResult[]): Promise<void>;
+
+  addRacePitStops(racePitStops: RacePitStopsData[]): Promise<void>;
 }
