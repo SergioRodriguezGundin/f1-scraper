@@ -131,6 +131,7 @@ const tables = [
       { name: "total", type: "text" },
       { name: "place", type: "text", notNull: true, defaultValue: " " },
       { name: "driverNumber", type: "int", notNull: true, defaultValue: "0" },
+      { name: "year", type: "int", notNull: true, defaultValue: "2024" },
     ],
   },
   {
@@ -142,6 +143,7 @@ const tables = [
       { name: "time", type: "text" },
       { name: "place", type: "text", notNull: true, defaultValue: " " },
       { name: "driverNumber", type: "int", notNull: true, defaultValue: "0" },
+      { name: "year", type: "int", notNull: true, defaultValue: "2024" },
     ],
   },
   {
@@ -156,6 +158,7 @@ const tables = [
       { name: "laps", type: "int", notNull: true, defaultValue: "0" },
       { name: "place", type: "text", notNull: true, defaultValue: " " },
       { name: "driverNumber", type: "int", notNull: true, defaultValue: "0" },
+      { name: "year", type: "int", notNull: true, defaultValue: "2024" },
     ],
   },
   {
@@ -168,6 +171,8 @@ const tables = [
       { name: "time", type: "text" },
       { name: "gap", type: "text" },
       { name: "laps", type: "int" },
+      { name: "year", type: "int", notNull: true, defaultValue: "2024" },
+      { name: "place", type: "text", notNull: true, defaultValue: " " },
     ],
   },
 ] as const;
