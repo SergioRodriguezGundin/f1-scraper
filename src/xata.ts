@@ -21,6 +21,10 @@ const tables = [
       { column: "driver", table: "Race_result" },
       { column: "winner", table: "Races_result" },
       { column: "driver", table: "Race_fastest_laps" },
+      { column: "driver", table: "Race_pit_stops" },
+      { column: "driver", table: "Race_starting_grid" },
+      { column: "driver", table: "Race_qualifying" },
+      { column: "driver", table: "Race_practice" },
     ],
   },
   {
@@ -38,6 +42,10 @@ const tables = [
       { column: "team", table: "Races_result" },
       { column: "team", table: "Race_result" },
       { column: "team", table: "Race_fastest_laps" },
+      { column: "team", table: "Race_pit_stops" },
+      { column: "team", table: "Race_starting_grid" },
+      { column: "team", table: "Race_qualifying" },
+      { column: "team", table: "Race_practice" },
     ],
   },
   {
@@ -100,7 +108,6 @@ const tables = [
     name: "Race_fastest_laps",
     columns: [
       { name: "position", type: "int", notNull: true, defaultValue: "0" },
-      { name: "driverNumber", type: "int", unique: true },
       { name: "driver", type: "link", link: { table: "Driver" } },
       { name: "team", type: "link", link: { table: "Team" } },
       { name: "lap", type: "int", notNull: true, defaultValue: "0" },
@@ -109,6 +116,58 @@ const tables = [
       { name: "avgSpeed", type: "text" },
       { name: "year", type: "int", notNull: true, defaultValue: "2024" },
       { name: "place", type: "text", notNull: true, defaultValue: " " },
+      { name: "driverNumber", type: "int", notNull: true, defaultValue: "0" },
+    ],
+  },
+  {
+    name: "Race_pit_stops",
+    columns: [
+      { name: "stops", type: "int", notNull: true, defaultValue: "0" },
+      { name: "driver", type: "link", link: { table: "Driver" } },
+      { name: "team", type: "link", link: { table: "Team" } },
+      { name: "lap", type: "int", notNull: true, defaultValue: "0" },
+      { name: "timeOfDay", type: "text" },
+      { name: "time", type: "text" },
+      { name: "total", type: "text" },
+      { name: "place", type: "text", notNull: true, defaultValue: " " },
+      { name: "driverNumber", type: "int", notNull: true, defaultValue: "0" },
+    ],
+  },
+  {
+    name: "Race_starting_grid",
+    columns: [
+      { name: "position", type: "int", notNull: true, defaultValue: "0" },
+      { name: "driver", type: "link", link: { table: "Driver" } },
+      { name: "team", type: "link", link: { table: "Team" } },
+      { name: "time", type: "text" },
+      { name: "place", type: "text", notNull: true, defaultValue: " " },
+      { name: "driverNumber", type: "int", notNull: true, defaultValue: "0" },
+    ],
+  },
+  {
+    name: "Race_qualifying",
+    columns: [
+      { name: "position", type: "int", notNull: true, defaultValue: "0" },
+      { name: "driver", type: "link", link: { table: "Driver" } },
+      { name: "team", type: "link", link: { table: "Team" } },
+      { name: "q1Time", type: "text" },
+      { name: "q2Time", type: "text" },
+      { name: "q3Time", type: "text" },
+      { name: "laps", type: "int", notNull: true, defaultValue: "0" },
+      { name: "place", type: "text", notNull: true, defaultValue: " " },
+      { name: "driverNumber", type: "int", notNull: true, defaultValue: "0" },
+    ],
+  },
+  {
+    name: "Race_practice",
+    columns: [
+      { name: "position", type: "int", notNull: true, defaultValue: "0" },
+      { name: "driverNumber", type: "int", notNull: true, defaultValue: "0" },
+      { name: "driver", type: "link", link: { table: "Driver" } },
+      { name: "team", type: "link", link: { table: "Team" } },
+      { name: "time", type: "text" },
+      { name: "gap", type: "text" },
+      { name: "laps", type: "int" },
     ],
   },
 ] as const;
@@ -134,6 +193,18 @@ export type ScheduleRecord = Schedule & XataRecord;
 export type RaceFastestLaps = InferredTypes["Race_fastest_laps"];
 export type RaceFastestLapsRecord = RaceFastestLaps & XataRecord;
 
+export type RacePitStops = InferredTypes["Race_pit_stops"];
+export type RacePitStopsRecord = RacePitStops & XataRecord;
+
+export type RaceStartingGrid = InferredTypes["Race_starting_grid"];
+export type RaceStartingGridRecord = RaceStartingGrid & XataRecord;
+
+export type RaceQualifying = InferredTypes["Race_qualifying"];
+export type RaceQualifyingRecord = RaceQualifying & XataRecord;
+
+export type RacePractice = InferredTypes["Race_practice"];
+export type RacePracticeRecord = RacePractice & XataRecord;
+
 export type DatabaseSchema = {
   Driver: DriverRecord;
   Team: TeamRecord;
@@ -141,6 +212,10 @@ export type DatabaseSchema = {
   Race_result: RaceResultRecord;
   Schedule: ScheduleRecord;
   Race_fastest_laps: RaceFastestLapsRecord;
+  Race_pit_stops: RacePitStopsRecord;
+  Race_starting_grid: RaceStartingGridRecord;
+  Race_qualifying: RaceQualifyingRecord;
+  Race_practice: RacePracticeRecord;
 };
 
 const DatabaseClient = buildClient();
