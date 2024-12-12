@@ -1,5 +1,7 @@
 import { Extractor } from '../interfaces/extractor.interface';
 import { RaceFastestLapsData, raceFastestLapsModel } from '../models/race/fastestLaps.model';
+import { racePitStopsModel } from '../models/race/pitStop.model';
+import { RacePitStopsData } from '../models/race/pitStop.model';
 import { RaceResultDetailData, raceResultDetailModel } from '../models/race/race.model';
 import { extractElement } from '../utils/extractor';
 import { F1_URL, F1_YEAR, RESULTS, getFastestLapsUrl, getPitStopsUrl, getPracticeOneUrl, getPracticeThreeUrl, getPracticeTwoUrl, getQualifyingUrl, getRaceResultUrl, getStartingGridUrl, racesMap } from '../utils/globals';
@@ -60,7 +62,7 @@ export const fastestLaps = async (env: Env, id: string): Promise<RaceFastestLaps
   }
 }
 
-export const pitStops = async (env: Env, id: string): Promise<void> => {
+export const pitStops = async (env: Env, id: string): Promise<RacePitStopsData[]> => {
   const race = racesMap.get(id);
 
   if (!race) {
@@ -73,6 +75,15 @@ export const pitStops = async (env: Env, id: string): Promise<void> => {
   try {
     const response = await fetch(url);
     const html = await response.text();
+
+    const racePitStops: RacePitStopsData = racePitStopsModel;
+    const extractor: Extractor<RacePitStopsData> = {
+      f1Object: racePitStops,
+      retrieveAdditionalData: setYear,
+    };
+    const racePitStopsResult: RacePitStopsData[] = await extractElement<RacePitStopsData>(html, extractor, env);
+
+    return racePitStopsResult;
   } catch (error) {
     console.error(error);
     throw new Error("Failed to fetch pit stops data");
@@ -174,7 +185,7 @@ export const practiceThree = async (env: Env, id: string): Promise<void> => {
   }
 }
 
-const setYear = async (raceResult: RaceResultDetailData | RaceFastestLapsData): Promise<void> => {
+const setYear = async (raceResult: RaceResultDetailData | RaceFastestLapsData | RacePitStopsData): Promise<void> => {
   raceResult.year = Number(F1_YEAR);
 }
 

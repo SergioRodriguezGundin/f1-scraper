@@ -1,8 +1,9 @@
-import { RaceFastestLaps, RaceResult } from '../../xata';
+import { RaceFastestLaps, RacePitStops, RaceResult } from '../../xata';
 import { getRacePlace } from '../../utils/globals';
 import { DBXataClient } from '../client/xata';
 import { RaceFastestLapsData } from '../../models/race/fastestLaps.model';
 import { RaceResultDetailData } from '../../models/race/race.model';
+import { RacePitStopsData } from '../../models/race/pitStop.model';
 
 export const addRaceResult = async (env: Env, raceId: string, raceResults: RaceResultDetailData[]) => {
   const xata = DBXataClient.getInstance(env);
@@ -54,10 +55,38 @@ export const addFastestLaps = async (env: Env, raceId: string, raceFastestLaps: 
       }
       raceFastestLapsDB.push(race);
     } else {
-      console.log('Error adding race fastest laps. Team or driver is not available', raceFastestLap);
+      console.log('Error adding race fastest laps. Team, driver or place is not available', raceFastestLap);
     }
   }
 
   await xata.addRaceFastestLaps(raceFastestLapsDB);
+}
+
+export const addPitStops = async (env: Env, raceId: string, racePitStops: RacePitStopsData[]) => {
+  const xata = DBXataClient.getInstance(env);
+  const racePitStopsDB: RacePitStopsData[] = [];
+
+  const place = getRacePlace(raceId);
+
+  for (const racePitStop of racePitStops) {
+    const [driver, team] = await Promise.all([
+      xata.getDriver(['name'], [racePitStop.driver]),
+      xata.getTeam(['name'], [racePitStop.team])
+    ]);
+
+    if (driver && team && place) {
+      const race: RacePitStopsData = {
+        ...racePitStop,
+        driver: driver as RacePitStops['driver'],
+        team: team as RacePitStops['team'],
+        place: place || ''
+      }
+      racePitStopsDB.push(race);
+    } else {
+      console.log('Error adding race pit stops. Team, driver or place is not available', racePitStop);
+    }
+  }
+
+  await xata.addRacePitStops(racePitStopsDB);
 }
 

@@ -1,10 +1,11 @@
 import { Context, Hono } from 'hono';
-import { addFastestLaps, addRaceResult } from '../../db/race/race';
+import { addFastestLaps, addPitStops, addRaceResult } from '../../db/race/race';
 import { addRacesResults } from '../../db/races';
 import { fastestLaps, getRace, pitStops } from '../../scraper/race';
 import { getRaces } from '../../scraper/races';
 import { RaceFastestLapsData } from '../../models/race/fastestLaps.model';
 import { RaceResultDetailData, RacesResultData } from '../../models/race/race.model';
+import { RacePitStopsData } from '../../models/race/pitStop.model';
 
 export function racesRouter(app: Hono) {
   app.get("/races", async (c: Context) => {
@@ -51,10 +52,10 @@ export function racesRouter(app: Hono) {
 
   app.get('/race/:id/pit-stops', async (c: Context) => {
     try {
-      //const racePitStops: RacePitStopsData[] = await pitStops(c.env, c.req.param('id'));
-      //await addPitStops(c.env, c.req.param('id'), racePitStops);
+      const racePitStops: RacePitStopsData[] = await pitStops(c.env, c.req.param('id'));
+      await addPitStops(c.env, c.req.param('id'), racePitStops);
 
-      //return c.json(racePitStops);
+      return c.json(racePitStops);
     } catch (error: unknown) {
       if (error instanceof Error) {
         return c.text(error.message, 500);

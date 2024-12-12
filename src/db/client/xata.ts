@@ -3,8 +3,9 @@ import { RaceResultDetailKeys, RaceResultKeys, raceResultKeys } from '../../inte
 import { ScheduleKeys } from '../../interfaces/schedule.interface';
 import { TeamKeys, teamKeys } from '../../interfaces/team.interface';
 import { RaceFastestLapsData } from '../../models/race/fastestLaps.model';
+import { RacePitStopsData } from '../../models/race/pitStop.model';
 import { RaceResultDetailData } from '../../models/race/race.model';
-import { Driver, RaceFastestLaps, RaceResult, RacesResult, Schedule, Team, XataClient } from '../../xata';
+import { Driver, RaceResult, RacesResult, Schedule, Team, XataClient } from '../../xata';
 import { DBClient } from './client.interface';
 
 export class DBXataClient implements DBClient {
@@ -155,6 +156,14 @@ export class DBXataClient implements DBClient {
       await this.client.db.Race_fastest_laps.create(raceFastestLaps);
     } catch (error) {
       console.error('Error creating race fastest laps: ', error);
+    }
+  }
+
+  public async addRacePitStops(racePitStops: RacePitStopsData[]): Promise<void> {
+    try {
+      await this.client.db.Race_pit_stops.create(racePitStops);
+    } catch (error) {
+      console.error('Error creating race pit stops: ', error);
     }
   }
 }
