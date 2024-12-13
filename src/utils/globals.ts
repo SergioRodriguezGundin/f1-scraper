@@ -51,7 +51,7 @@ export const getFastestLapsUrl = (race: string) => {
 }
 
 export const getPitStopsUrl = (race: string) => {
-  return `${racesMap.get(race)?.race}/pit-stops-summary`;
+  return `${racesMap.get(race)?.race}/pit-stop-summary`;
 }
 
 export const getQualifyingUrl = (race: string) => {
@@ -63,13 +63,13 @@ export const getStartingGridUrl = (race: string) => {
 }
 
 export const getPracticeOneUrl = (race: string) => {
-  return `${racesMap.get(race)?.race}/practice-1`;
+  return `${racesMap.get(race)?.race}/practice/1`;
 }
 
 export const getPracticeTwoUrl = (race: string) => {
-  return `${racesMap.get(race)?.race}/practice-2`;
+  return `${racesMap.get(race)?.race}/practice/2`;
 }
 
 export const getPracticeThreeUrl = (race: string) => {
-  return `${racesMap.get(race)?.race}/practice-3`;
+  return `${racesMap.get(race)?.race}/practice/3`;
 }
