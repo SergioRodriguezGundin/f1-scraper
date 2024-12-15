@@ -5,6 +5,9 @@ import { RaceFastestLapsData } from '../../models/race/fastestLaps.model';
 import { RaceResultDetailData } from '../../models/race/race.model';
 import { RacePitStopsData } from '../../models/race/pitStop.model';
 
+import { teamCache } from '../../utils/cache/team';
+import { driverCache } from '../../utils/cache/driver';
+
 export const addRaceResult = async (env: Env, raceId: string, raceResults: RaceResultDetailData[]) => {
   const xata = DBXataClient.getInstance(env);
   const raceResultsDB: RaceResultDetailData[] = [];
@@ -65,16 +68,21 @@ export const addFastestLaps = async (env: Env, raceId: string, raceFastestLaps: 
 export const addPitStops = async (env: Env, raceId: string, racePitStops: RacePitStopsData[]) => {
   const xata = DBXataClient.getInstance(env);
   const racePitStopsDB: RacePitStopsData[] = [];
-
   const place = getRacePlace(raceId);
 
   for (const racePitStop of racePitStops) {
-    const [driver, team] = await Promise.all([
-      xata.getDriver(['name'], [racePitStop.driver]),
-      xata.getTeam(['name'], [racePitStop.team])
-    ]);
+    let driver = driverCache.get(racePitStop.driver as unknown as string); // HACK: Type assertion to avoid type error
 
-    console.log(driver, team, place);
+    if (!driver) {
+      driver = await xata.getDriver(['name'], [racePitStop.driver]);
+      driver && driverCache.set(driver);
+    }
+
+    let team = teamCache.get(racePitStop.team as unknown as string); // HACK: Type assertion to avoid type error
+    if (!team) {
+      team = await xata.getTeam(['name'], [racePitStop.team]);
+      team && teamCache.set(team);
+    }
 
     if (driver && team && place) {
       const race: RacePitStopsData = {

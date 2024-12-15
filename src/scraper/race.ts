@@ -83,8 +83,6 @@ export const pitStops = async (env: Env, id: string): Promise<RacePitStopsData[]
     };
     const racePitStopsResult: RacePitStopsData[] = await extractElement<RacePitStopsData>(html, extractor, env);
 
-    console.log(racePitStopsResult);
-
     return racePitStopsResult;
   } catch (error) {
     console.error(error);
