@@ -57,6 +57,7 @@ export function racesRouter(app: Hono) {
 
       return c.json(racePitStops);
     } catch (error: unknown) {
+      console.log(error);
       if (error instanceof Error) {
         return c.text(error.message, 500);
       }

@@ -74,6 +74,8 @@ export const addPitStops = async (env: Env, raceId: string, racePitStops: RacePi
       xata.getTeam(['name'], [racePitStop.team])
     ]);
 
+    console.log(driver, team, place);
+
     if (driver && team && place) {
       const race: RacePitStopsData = {
         ...racePitStop,
