@@ -1,12 +1,14 @@
-import { RaceFastestLaps, RacePitStops, RaceResult } from '../../xata';
-import { getRacePlace } from '../../utils/globals';
-import { DBXataClient } from '../client/xata';
 import { RaceFastestLapsData } from '../../models/race/fastestLaps.model';
-import { RaceResultDetailData } from '../../models/race/race.model';
 import { RacePitStopsData } from '../../models/race/pitStop.model';
+import { RaceResultDetailData } from '../../models/race/race.model';
+import { getRacePlace } from '../../utils/globals';
+import { RaceFastestLaps, RacePitStops, RaceQualifying, RaceResult, RaceStartingGrid } from '../../xata';
+import { DBXataClient } from '../client/xata';
 
-import { teamCache } from '../../utils/cache/team';
+import { RaceQualifyingData } from '../../models/race/qualifying.model';
+import { RaceStartingGridData } from '../../models/race/startingGrid.model';
 import { driverCache } from '../../utils/cache/driver';
+import { teamCache } from '../../utils/cache/team';
 
 export const addRaceResult = async (env: Env, raceId: string, raceResults: RaceResultDetailData[]) => {
   const xata = DBXataClient.getInstance(env);
@@ -99,4 +101,86 @@ export const addPitStops = async (env: Env, raceId: string, racePitStops: RacePi
 
   await xata.addRacePitStops(racePitStopsDB);
 }
+
+export const addStartingGrid = async (env: Env, raceId: string, raceStartingGrid: RaceStartingGridData[]) => {
+  const xata = DBXataClient.getInstance(env);
+  const raceStartingGridDB: RaceStartingGridData[] = [];
+
+  const place = getRacePlace(raceId);
+
+  for (const startingGrid of raceStartingGrid) {
+
+    let driver = driverCache.get(startingGrid.driver as unknown as string);
+    if (!driver) {
+      driver = await xata.getDriver(['name'], [startingGrid.driver]);
+      driver && driverCache.set(driver);
+    }
+
+    let team = teamCache.get(startingGrid.team as unknown as string);
+    if (!team) {
+      team = await xata.getTeam(['name'], [startingGrid.team]);
+      team && teamCache.set(team);
+    }
+
+    if (place) {
+      const race: RaceStartingGridData = {
+        ...startingGrid,
+        driver: driver as RaceStartingGrid['driver'],
+        team: team as RaceStartingGrid['team'],
+        place: place || ''
+      }
+      raceStartingGridDB.push(race);
+    } else {
+      console.log('Error adding race starting grid. Place is not available', raceStartingGrid);
+    }
+  }
+
+  await xata.addRaceStartingGrid(raceStartingGridDB);
+}
+
+export const addQualifying = async (env: Env, raceId: string, raceQualifying: RaceQualifyingData[]) => {
+  const xata = DBXataClient.getInstance(env);
+  const raceQualifyingDB: RaceQualifyingData[] = [];
+
+  const place = getRacePlace(raceId);
+
+  for (const qualifying of raceQualifying) {
+    let driver = driverCache.get(qualifying.driver as unknown as string);
+    if (!driver) {
+      driver = await xata.getDriver(['name'], [qualifying.driver]);
+      driver && driverCache.set(driver);
+    }
+
+    let team = teamCache.get(qualifying.team as unknown as string);
+    if (!team) {
+      team = await xata.getTeam(['name'], [qualifying.team]);
+      team && teamCache.set(team);
+    }
+
+    if (driver && team && place) {
+      const race: RaceQualifyingData = {
+        ...qualifying,
+        driver: driver as RaceQualifying['driver'],
+        team: team as RaceQualifying['team'],
+        place: place || ''
+      }
+      raceQualifyingDB.push(race);
+    } else {
+      console.log('Error adding race qualifying. Team, driver or place is not available', qualifying);
+    }
+  }
+
+  await xata.addRaceQualifying(raceQualifyingDB);
+}
+
+
+
+
+
+
+
+
+
+
+
 

@@ -2,7 +2,10 @@ import { Extractor } from '../interfaces/extractor.interface';
 import { RaceFastestLapsData, raceFastestLapsModel } from '../models/race/fastestLaps.model';
 import { racePitStopsModel } from '../models/race/pitStop.model';
 import { RacePitStopsData } from '../models/race/pitStop.model';
+import { RaceQualifyingData, raceQualifyingModel } from '../models/race/qualifying.model';
 import { RaceResultDetailData, raceResultDetailModel } from '../models/race/race.model';
+import { raceStartingGridModel } from '../models/race/startingGrid.model';
+import { RaceStartingGridData } from '../models/race/startingGrid.model';
 import { extractElement } from '../utils/extractor';
 import { F1_URL, F1_YEAR, RESULTS, getFastestLapsUrl, getPitStopsUrl, getPracticeOneUrl, getPracticeThreeUrl, getPracticeTwoUrl, getQualifyingUrl, getRaceResultUrl, getStartingGridUrl, racesMap } from '../utils/globals';
 
@@ -90,7 +93,7 @@ export const pitStops = async (env: Env, id: string): Promise<RacePitStopsData[]
   }
 }
 
-export const startingGrid = async (env: Env, id: string): Promise<void> => {
+export const startingGrid = async (env: Env, id: string): Promise<RaceStartingGridData[]> => {
   const race = racesMap.get(id);
 
   if (!race) {
@@ -103,13 +106,22 @@ export const startingGrid = async (env: Env, id: string): Promise<void> => {
   try {
     const response = await fetch(url);
     const html = await response.text();
+
+    const raceStartingGrid: RaceStartingGridData = raceStartingGridModel;
+    const extractor: Extractor<RaceStartingGridData> = {
+      f1Object: raceStartingGrid,
+      retrieveAdditionalData: setYear,
+    };
+    const raceStartingGridResult: RaceStartingGridData[] = await extractElement<RaceStartingGridData>(html, extractor, env);
+
+    return raceStartingGridResult;
   } catch (error) {
     console.error(error);
     throw new Error("Failed to fetch starting grid data");
   }
 }
 
-export const qualifying = async (env: Env, id: string): Promise<void> => {
+export const qualifying = async (env: Env, id: string): Promise<RaceQualifyingData[]> => {
   const race = racesMap.get(id);
 
   if (!race) {
@@ -122,6 +134,15 @@ export const qualifying = async (env: Env, id: string): Promise<void> => {
   try {
     const response = await fetch(url);
     const html = await response.text();
+
+    const raceQualifying: RaceQualifyingData = raceQualifyingModel;
+    const extractor: Extractor<RaceQualifyingData> = {
+      f1Object: raceQualifying,
+      retrieveAdditionalData: setYear,
+    };
+    const raceQualifyingResult: RaceQualifyingData[] = await extractElement<RaceQualifyingData>(html, extractor, env);
+
+    return raceQualifyingResult;
   } catch (error) {
     console.error(error);
     throw new Error("Failed to fetch qualifying data");
@@ -185,7 +206,7 @@ export const practiceThree = async (env: Env, id: string): Promise<void> => {
   }
 }
 
-const setYear = async (raceResult: RaceResultDetailData | RaceFastestLapsData | RacePitStopsData): Promise<void> => {
+const setYear = async (raceResult: RaceResultDetailData | RaceFastestLapsData | RacePitStopsData | RaceStartingGridData | RaceQualifyingData): Promise<void> => {
   raceResult.year = Number(F1_YEAR);
 }
 

@@ -6,6 +6,7 @@ export const raceStartingGridModel: RaceStartingGridData = {
   position: 0,
   driverNumber: 0,
   driver: null,
+  team: null,
   time: '',
   year: 2024,
   place: '',

@@ -4,7 +4,9 @@ import { ScheduleKeys } from '../../interfaces/schedule.interface';
 import { TeamKeys, teamKeys } from '../../interfaces/team.interface';
 import { RaceFastestLapsData } from '../../models/race/fastestLaps.model';
 import { RacePitStopsData } from '../../models/race/pitStop.model';
+import { RaceQualifyingData } from '../../models/race/qualifying.model';
 import { RaceResultDetailData } from '../../models/race/race.model';
+import { RaceStartingGridData } from '../../models/race/startingGrid.model';
 import { Driver, RaceResult, RacesResult, Schedule, Team, XataClient } from '../../xata';
 import { DBClient } from './client.interface';
 
@@ -164,6 +166,22 @@ export class DBXataClient implements DBClient {
       await this.client.db.Race_pit_stops.create(racePitStops);
     } catch (error) {
       console.error('Error creating race pit stops: ', error);
+    }
+  }
+
+  public async addRaceStartingGrid(raceStartingGrid: RaceStartingGridData[]): Promise<void> {
+    try {
+      await this.client.db.Race_starting_grid.create(raceStartingGrid);
+    } catch (error) {
+      console.error('Error creating race starting grid: ', error);
+    }
+  }
+
+  public async addRaceQualifying(raceQualifying: RaceQualifyingData[]): Promise<void> {
+    try {
+      await this.client.db.Race_qualifying.create(raceQualifying);
+    } catch (error) {
+      console.error('Error creating race qualifying: ', error);
     }
   }
 }

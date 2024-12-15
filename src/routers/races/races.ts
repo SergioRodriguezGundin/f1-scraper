@@ -1,11 +1,13 @@
 import { Context, Hono } from 'hono';
-import { addFastestLaps, addPitStops, addRaceResult } from '../../db/race/race';
+import { addFastestLaps, addPitStops, addQualifying, addRaceResult, addStartingGrid } from '../../db/race/race';
 import { addRacesResults } from '../../db/races';
-import { fastestLaps, getRace, pitStops } from '../../scraper/race';
-import { getRaces } from '../../scraper/races';
 import { RaceFastestLapsData } from '../../models/race/fastestLaps.model';
-import { RaceResultDetailData, RacesResultData } from '../../models/race/race.model';
 import { RacePitStopsData } from '../../models/race/pitStop.model';
+import { RaceQualifyingData } from '../../models/race/qualifying.model';
+import { RaceResultDetailData, RacesResultData } from '../../models/race/race.model';
+import { RaceStartingGridData } from '../../models/race/startingGrid.model';
+import { fastestLaps, getRace, pitStops, qualifying, startingGrid } from '../../scraper/race';
+import { getRaces } from '../../scraper/races';
 
 export function racesRouter(app: Hono) {
   app.get("/races", async (c: Context) => {
@@ -58,6 +60,34 @@ export function racesRouter(app: Hono) {
       return c.json(racePitStops);
     } catch (error: unknown) {
       console.log(error);
+      if (error instanceof Error) {
+        return c.text(error.message, 500);
+      }
+      return c.text("An unknown error occurred", 500);
+    }
+  });
+
+  app.get('/race/:id/starting-grid', async (c: Context) => {
+    try {
+      const raceStartingGrid: RaceStartingGridData[] = await startingGrid(c.env, c.req.param('id'));
+      await addStartingGrid(c.env, c.req.param('id'), raceStartingGrid);
+
+      return c.json(raceStartingGrid);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return c.text(error.message, 500);
+      }
+      return c.text("An unknown error occurred", 500);
+    }
+  })
+
+  app.get('/race/:id/qualifying', async (c: Context) => {
+    try {
+      const raceQualifying: RaceQualifyingData[] = await qualifying(c.env, c.req.param('id'));
+      await addQualifying(c.env, c.req.param('id'), raceQualifying);
+
+      return c.json(raceQualifying);
+    } catch (error: unknown) {
       if (error instanceof Error) {
         return c.text(error.message, 500);
       }
