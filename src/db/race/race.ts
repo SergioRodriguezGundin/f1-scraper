@@ -17,10 +17,18 @@ export const addRaceResult = async (env: Env, raceId: string, raceResults: RaceR
   const place = getRacePlace(raceId);
 
   for (const raceResult of raceResults) {
-    const [driver, team] = await Promise.all([
-      xata.getDriver(['name'], [raceResult.driver]),
-      xata.getTeam(['name'], [raceResult.team])
-    ]);
+    let driver = driverCache.get(raceResult.driver as unknown as string);
+    let team = teamCache.get(raceResult.team as unknown as string);
+
+    if (!driver) {
+      driver = await xata.getDriver(['name'], [raceResult.driver]);
+      driver && driverCache.set(driver);
+    }
+
+    if (!team) {
+      team = await xata.getTeam(['name'], [raceResult.team]);
+      team && teamCache.set(team);
+    }
 
     if (driver && team && place) {
       const race: RaceResultDetailData = {
@@ -46,10 +54,18 @@ export const addFastestLaps = async (env: Env, raceId: string, raceFastestLaps: 
   const place = getRacePlace(raceId);
 
   for (const raceFastestLap of raceFastestLaps) {
-    const [driver, team] = await Promise.all([
-      xata.getDriver(['name'], [raceFastestLap.driver]),
-      xata.getTeam(['name'], [raceFastestLap.team])
-    ]);
+    let driver = driverCache.get(raceFastestLap.driver as unknown as string);
+    let team = teamCache.get(raceFastestLap.team as unknown as string);
+
+    if (!driver) {
+      driver = await xata.getDriver(['name'], [raceFastestLap.driver]);
+      driver && driverCache.set(driver);
+    }
+
+    if (!team) {
+      team = await xata.getTeam(['name'], [raceFastestLap.team]);
+      team && teamCache.set(team);
+    }
 
     if (driver && team && place) {
       const race: RaceFastestLapsData = {
