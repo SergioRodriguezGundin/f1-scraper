@@ -8,6 +8,7 @@ import { RaceResultDetailData, RacesResultData } from '../../models/race/race.mo
 import { RaceStartingGridData } from '../../models/race/startingGrid.model';
 import { fastestLaps, getRace, pitStops, qualifying, startingGrid } from '../../scraper/race';
 import { getRaces } from '../../scraper/races';
+import { RacePracticeData } from '../../models/race/practice.model';
 
 export function racesRouter(app: Hono) {
   app.get("/races", async (c: Context) => {
@@ -79,7 +80,7 @@ export function racesRouter(app: Hono) {
       }
       return c.text("An unknown error occurred", 500);
     }
-  })
+  });
 
   app.get('/race/:id/qualifying', async (c: Context) => {
     try {
@@ -87,6 +88,20 @@ export function racesRouter(app: Hono) {
       await addQualifying(c.env, c.req.param('id'), raceQualifying);
 
       return c.json(raceQualifying);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return c.text(error.message, 500);
+      }
+      return c.text("An unknown error occurred", 500);
+    }
+  });
+
+  app.get('/race/:id/practice/:practice', async (c: Context) => {
+    try {
+      const racePractice: RacePracticeData[] = await practice(c.env, c.req.param('id'), c.req.param('practice'));
+      await addPractice(c.env, c.req.param('id'), c.req.param('practice'), racePractice);
+
+      return c.json(racePractice);
     } catch (error: unknown) {
       if (error instanceof Error) {
         return c.text(error.message, 500);

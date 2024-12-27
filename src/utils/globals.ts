@@ -1,3 +1,9 @@
+import { RaceFastestLapsData } from '../models/race/fastestLaps.model';
+import { RacePitStopsData } from '../models/race/pitStop.model';
+import { RaceQualifyingData } from '../models/race/qualifying.model';
+import { RaceResultDetailData } from '../models/race/race.model';
+import { RaceStartingGridData } from '../models/race/startingGrid.model';
+
 export const F1_URL = "https://www.formula1.com";
 export const F1_YEAR = "2024";
 
@@ -72,4 +78,24 @@ export const getPracticeTwoUrl = (race: string) => {
 
 export const getPracticeThreeUrl = (race: string) => {
   return `${racesMap.get(race)?.race}/practice/3`;
+}
+
+const practiceUrlGetters: Record<number, (id: string) => string> = {
+  1: getPracticeOneUrl,
+  2: getPracticeTwoUrl,
+  3: getPracticeThreeUrl,
+};
+
+export const getPracticeUrlById = (id: string, practiceId: number): string => {
+  const practiceUrl = practiceUrlGetters[practiceId];
+
+  if (!practiceUrl) {
+    throw new Error(`Invalid practice session ID: ${practiceId}`);
+  }
+
+  return practiceUrl(id);
+}
+
+export const setYear = async (raceResult: RaceResultDetailData | RaceFastestLapsData | RacePitStopsData | RaceStartingGridData | RaceQualifyingData): Promise<void> => {
+  raceResult.year = Number(F1_YEAR);
 }
