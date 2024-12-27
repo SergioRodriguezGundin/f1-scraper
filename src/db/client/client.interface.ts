@@ -3,6 +3,7 @@ import { RaceResultDetailKeys, RaceResultKeys } from '../../interfaces/race/race
 import { ScheduleKeys } from '../../interfaces/schedule.interface';
 import { TeamKeys } from '../../interfaces/team.interface';
 import { RacePitStopsData } from '../../models/race/pitStop.model';
+import { RacePracticeData } from '../../models/race/practice.model';
 import { RaceQualifyingData } from '../../models/race/qualifying.model';
 import { RaceStartingGridData } from '../../models/race/startingGrid.model';
 import { Driver, RaceResult, RacesResult, Schedule, Team } from '../../xata';
@@ -28,4 +29,5 @@ export interface DBClient {
   addRacePitStops(racePitStops: RacePitStopsData[]): Promise<void>;
   addRaceStartingGrid(raceStartingGrid: RaceStartingGridData[]): Promise<void>;
   addRaceQualifying(raceQualifying: RaceQualifyingData[]): Promise<void>;
+  addRacePractice(racePractice: RacePracticeData[]): Promise<void>;
 }

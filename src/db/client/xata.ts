@@ -4,6 +4,7 @@ import { ScheduleKeys } from '../../interfaces/schedule.interface';
 import { TeamKeys, teamKeys } from '../../interfaces/team.interface';
 import { RaceFastestLapsData } from '../../models/race/fastestLaps.model';
 import { RacePitStopsData } from '../../models/race/pitStop.model';
+import { RacePracticeData } from '../../models/race/practice.model';
 import { RaceQualifyingData } from '../../models/race/qualifying.model';
 import { RaceResultDetailData } from '../../models/race/race.model';
 import { RaceStartingGridData } from '../../models/race/startingGrid.model';
@@ -182,6 +183,14 @@ export class DBXataClient implements DBClient {
       await this.client.db.Race_qualifying.create(raceQualifying);
     } catch (error) {
       console.error('Error creating race qualifying: ', error);
+    }
+  }
+
+  public async addRacePractice(racePractice: RacePracticeData[]): Promise<void> {
+    try {
+      await this.client.db.Race_practice.create(racePractice);
+    } catch (error) {
+      console.error('Error creating race practice: ', error);
     }
   }
 }

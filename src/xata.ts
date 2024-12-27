@@ -173,6 +173,7 @@ const tables = [
       { name: "laps", type: "int" },
       { name: "year", type: "int", notNull: true, defaultValue: "2024" },
       { name: "place", type: "text", notNull: true, defaultValue: " " },
+      { name: "session", type: "int", notNull: true, defaultValue: "0" },
     ],
   },
 ] as const;

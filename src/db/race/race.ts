@@ -9,6 +9,7 @@ import { RaceQualifyingData } from '../../models/race/qualifying.model';
 import { RaceStartingGridData } from '../../models/race/startingGrid.model';
 import { driverCache } from '../../utils/cache/driver';
 import { teamCache } from '../../utils/cache/team';
+import { RacePracticeData } from '../../models/race/practice.model';
 
 export const addRaceResult = async (env: Env, raceId: string, raceResults: RaceResultDetailData[]) => {
   const xata = DBXataClient.getInstance(env);
@@ -187,6 +188,42 @@ export const addQualifying = async (env: Env, raceId: string, raceQualifying: Ra
   }
 
   await xata.addRaceQualifying(raceQualifyingDB);
+}
+
+export const addPractice = async (env: Env, raceId: string, practiceId: string, racePractice: RacePracticeData[]) => {
+  const xata = DBXataClient.getInstance(env);
+  const racePracticeDB: RacePracticeData[] = [];
+
+  const place = getRacePlace(raceId);
+
+  for (const practice of racePractice) {
+    let driver = driverCache.get(practice.driver as unknown as string);
+    if (!driver) {
+      driver = await xata.getDriver(['name'], [practice.driver]);
+      driver && driverCache.set(driver);
+    }
+
+    let team = teamCache.get(practice.team as unknown as string);
+    if (!team) {
+      team = await xata.getTeam(['name'], [practice.team]);
+      team && teamCache.set(team);
+    }
+
+    if (place) {
+      const race: RacePracticeData = {
+        ...practice,
+        driver: driver as RacePracticeData['driver'],
+        team: team as RacePracticeData['team'],
+        place: place || '',
+        session: Number(practiceId)
+      }
+      racePracticeDB.push(race);
+    } else {
+      console.log('Error adding race practice. Place is not available', practice);
+    }
+  }
+
+  await xata.addRacePractice(racePracticeDB);
 }
 
 

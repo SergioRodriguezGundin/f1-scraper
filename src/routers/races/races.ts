@@ -1,12 +1,12 @@
 import { Context, Hono } from 'hono';
-import { addFastestLaps, addPitStops, addQualifying, addRaceResult, addStartingGrid } from '../../db/race/race';
+import { addFastestLaps, addPitStops, addPractice, addQualifying, addRaceResult, addStartingGrid } from '../../db/race/race';
 import { addRacesResults } from '../../db/races';
 import { RaceFastestLapsData } from '../../models/race/fastestLaps.model';
 import { RacePitStopsData } from '../../models/race/pitStop.model';
 import { RaceQualifyingData } from '../../models/race/qualifying.model';
 import { RaceResultDetailData, RacesResultData } from '../../models/race/race.model';
 import { RaceStartingGridData } from '../../models/race/startingGrid.model';
-import { fastestLaps, getRace, pitStops, qualifying, startingGrid } from '../../scraper/race';
+import { fastestLaps, getRace, pitStops, practice, qualifying, startingGrid } from '../../scraper/race';
 import { getRaces } from '../../scraper/races';
 import { RacePracticeData } from '../../models/race/practice.model';
 
