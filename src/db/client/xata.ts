@@ -8,6 +8,9 @@ import { RacePracticeData } from '../../models/race/practice.model';
 import { RaceQualifyingData } from '../../models/race/qualifying.model';
 import { RaceResultDetailData } from '../../models/race/race.model';
 import { RaceStartingGridData } from '../../models/race/startingGrid.model';
+import { SprintGridData } from '../../models/sprint/sprintGrid.model';
+import { SprintQualifyingData } from '../../models/sprint/sprintQualifying.model';
+import { SprintRaceData } from '../../models/sprint/sprintRace.model';
 import { Driver, RaceResult, RacesResult, Schedule, Team, XataClient } from '../../xata';
 import { DBClient } from './client.interface';
 
@@ -191,6 +194,30 @@ export class DBXataClient implements DBClient {
       await this.client.db.Race_practice.create(racePractice);
     } catch (error) {
       console.error('Error creating race practice: ', error);
+    }
+  }
+
+  public async addSprintGrid(sprintGrid: SprintGridData[]): Promise<void> {
+    try {
+      await this.client.db.Sprint_grid.create(sprintGrid);
+    } catch (error) {
+      console.error('Error creating sprint grid: ', error);
+    }
+  }
+
+  public async addSprintRace(sprintRace: SprintRaceData[]): Promise<void> {
+    try {
+      await this.client.db.Sprint_race.create(sprintRace);
+    } catch (error) {
+      console.error('Error creating sprint race: ', error);
+    }
+  }
+
+  public async addSprintQualifying(sprintQualifying: SprintQualifyingData[]): Promise<void> {
+    try {
+      await this.client.db.Sprint_qualifying.create(sprintQualifying);
+    } catch (error) {
+      console.error('Error creating sprint qualifying: ', error);
     }
   }
 }

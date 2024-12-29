@@ -80,6 +80,18 @@ export const getPracticeThreeUrl = (race: string) => {
   return `${racesMap.get(race)?.race}/practice/3`;
 }
 
+export const getSprintQualifyingUrl = (race: string) => {
+  return `${racesMap.get(race)?.race}/sprint-qualifying`;
+}
+
+export const getSprintGridUrl = (race: string) => {
+  return `${racesMap.get(race)?.race}/sprint-grid`;
+}
+
+export const getSprintRaceUrl = (race: string) => {
+  return `${racesMap.get(race)?.race}/sprint-results`;
+}
+
 const practiceUrlGetters: Record<number, (id: string) => string> = {
   1: getPracticeOneUrl,
   2: getPracticeTwoUrl,

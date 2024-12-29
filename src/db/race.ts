@@ -1,15 +1,15 @@
-import { RaceFastestLapsData } from '../../models/race/fastestLaps.model';
-import { RacePitStopsData } from '../../models/race/pitStop.model';
-import { RaceResultDetailData } from '../../models/race/race.model';
-import { getRacePlace } from '../../utils/globals';
-import { RaceFastestLaps, RacePitStops, RaceQualifying, RaceResult, RaceStartingGrid } from '../../xata';
-import { DBXataClient } from '../client/xata';
+import { RaceFastestLapsData } from '../models/race/fastestLaps.model';
+import { RacePitStopsData } from '../models/race/pitStop.model';
+import { RaceResultDetailData } from '../models/race/race.model';
+import { getRacePlace } from '../utils/globals';
+import { RaceFastestLaps, RacePitStops, RaceQualifying, RaceResult, RaceStartingGrid } from '../xata';
+import { DBXataClient } from './client/xata';
 
-import { RaceQualifyingData } from '../../models/race/qualifying.model';
-import { RaceStartingGridData } from '../../models/race/startingGrid.model';
-import { driverCache } from '../../utils/cache/driver';
-import { teamCache } from '../../utils/cache/team';
-import { RacePracticeData } from '../../models/race/practice.model';
+import { RaceQualifyingData } from '../models/race/qualifying.model';
+import { RaceStartingGridData } from '../models/race/startingGrid.model';
+import { driverCache } from '../utils/cache/driver';
+import { teamCache } from '../utils/cache/team';
+import { RacePracticeData } from '../models/race/practice.model';
 
 export const addRaceResult = async (env: Env, raceId: string, raceResults: RaceResultDetailData[]) => {
   const xata = DBXataClient.getInstance(env);
@@ -209,7 +209,7 @@ export const addPractice = async (env: Env, raceId: string, practiceId: string, 
       team && teamCache.set(team);
     }
 
-    if (place) {
+    if (place && driver && team) {
       const race: RacePracticeData = {
         ...practice,
         driver: driver as RacePracticeData['driver'],
@@ -219,7 +219,7 @@ export const addPractice = async (env: Env, raceId: string, practiceId: string, 
       }
       racePracticeDB.push(race);
     } else {
-      console.log('Error adding race practice. Place is not available', practice);
+      console.log('Error adding race practice. Place, driver or team is not available', practice);
     }
   }
 

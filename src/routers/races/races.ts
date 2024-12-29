@@ -1,14 +1,19 @@
 import { Context, Hono } from 'hono';
-import { addFastestLaps, addPitStops, addPractice, addQualifying, addRaceResult, addStartingGrid } from '../../db/race/race';
+import { addFastestLaps, addPitStops, addPractice, addQualifying, addRaceResult, addStartingGrid } from '../../db/race';
 import { addRacesResults } from '../../db/races';
+import { addSprintGrid, addSprintQualifying, addSprintRace } from '../../db/sprint';
 import { RaceFastestLapsData } from '../../models/race/fastestLaps.model';
 import { RacePitStopsData } from '../../models/race/pitStop.model';
+import { RacePracticeData } from '../../models/race/practice.model';
 import { RaceQualifyingData } from '../../models/race/qualifying.model';
 import { RaceResultDetailData, RacesResultData } from '../../models/race/race.model';
 import { RaceStartingGridData } from '../../models/race/startingGrid.model';
+import { SprintGridData } from '../../models/sprint/sprintGrid.model';
+import { SprintQualifyingData } from '../../models/sprint/sprintQualifying.model';
+import { SprintRaceData } from '../../models/sprint/sprintRace.model';
 import { fastestLaps, getRace, pitStops, practice, qualifying, startingGrid } from '../../scraper/race';
 import { getRaces } from '../../scraper/races';
-import { RacePracticeData } from '../../models/race/practice.model';
+import { sprintGrid, sprintQualifying, sprintRace } from '../../scraper/sprint';
 
 export function racesRouter(app: Hono) {
   app.get("/races", async (c: Context) => {
@@ -112,7 +117,7 @@ export function racesRouter(app: Hono) {
 
   app.get('/race/:id/sprint-qualifying', async (c: Context) => {
     try {
-      const raceSprintQualifying: RaceSprintQualifyingData[] = await sprintQualifying(c.env, c.req.param('id'));
+      const raceSprintQualifying: SprintQualifyingData[] = await sprintQualifying(c.env, c.req.param('id'));
       await addSprintQualifying(c.env, c.req.param('id'), raceSprintQualifying);
 
       return c.json(raceSprintQualifying);
@@ -126,7 +131,7 @@ export function racesRouter(app: Hono) {
 
   app.get('/race/:id/sprint-grid', async (c: Context) => {
     try {
-      const raceSprintGrid: RaceSprintGridData[] = await sprintGrid(c.env, c.req.param('id'));
+      const raceSprintGrid: SprintGridData[] = await sprintGrid(c.env, c.req.param('id'));
       await addSprintGrid(c.env, c.req.param('id'), raceSprintGrid);
 
       return c.json(raceSprintGrid);
@@ -140,7 +145,7 @@ export function racesRouter(app: Hono) {
 
   app.get('/race/:id/sprint-race', async (c: Context) => {
     try {
-      const raceSprintRace: RaceSprintRaceData[] = await sprintRace(c.env, c.req.param('id'));
+      const raceSprintRace: SprintRaceData[] = await sprintRace(c.env, c.req.param('id'));
       await addSprintRace(c.env, c.req.param('id'), raceSprintRace);
 
       return c.json(raceSprintRace);

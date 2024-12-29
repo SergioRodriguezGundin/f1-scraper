@@ -6,6 +6,9 @@ import { RacePitStopsData } from '../../models/race/pitStop.model';
 import { RacePracticeData } from '../../models/race/practice.model';
 import { RaceQualifyingData } from '../../models/race/qualifying.model';
 import { RaceStartingGridData } from '../../models/race/startingGrid.model';
+import { SprintGridData } from '../../models/sprint/sprintGrid.model';
+import { SprintQualifyingData } from '../../models/sprint/sprintQualifying.model';
+import { SprintRaceData } from '../../models/sprint/sprintRace.model';
 import { Driver, RaceResult, RacesResult, Schedule, Team } from '../../xata';
 
 export interface DBClient {
@@ -30,4 +33,8 @@ export interface DBClient {
   addRaceStartingGrid(raceStartingGrid: RaceStartingGridData[]): Promise<void>;
   addRaceQualifying(raceQualifying: RaceQualifyingData[]): Promise<void>;
   addRacePractice(racePractice: RacePracticeData[]): Promise<void>;
+
+  addSprintGrid(sprintGrid: SprintGridData[]): Promise<void>;
+  addSprintRace(sprintRace: SprintRaceData[]): Promise<void>;
+  addSprintQualifying(sprintQualifying: SprintQualifyingData[]): Promise<void>;
 }

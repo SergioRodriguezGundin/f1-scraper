@@ -5,8 +5,9 @@ import { RacePracticeData, racePracticeModel } from '../models/race/practice.mod
 import { RaceQualifyingData, raceQualifyingModel } from '../models/race/qualifying.model';
 import { RaceResultDetailData, raceResultDetailModel } from '../models/race/race.model';
 import { RaceStartingGridData, raceStartingGridModel } from '../models/race/startingGrid.model';
+import { SprintQualifyingData, sprintQualifyingModel } from '../models/sprint/sprintQualifying.model';
 import { extractElement } from '../utils/extractor';
-import { F1_URL, F1_YEAR, RESULTS, getFastestLapsUrl, getPitStopsUrl, getPracticeUrlById, getQualifyingUrl, getRaceResultUrl, getStartingGridUrl, racesMap, setYear } from '../utils/globals';
+import { F1_URL, F1_YEAR, RESULTS, getFastestLapsUrl, getPitStopsUrl, getPracticeUrlById, getQualifyingUrl, getRaceResultUrl, getSprintQualifyingUrl, getStartingGridUrl, racesMap, setYear } from '../utils/globals';
 
 export const getRace = async (env: Env, id: string): Promise<RaceResultDetailData[]> => {
   const race = racesMap.get(id);
@@ -175,4 +176,3 @@ export const practice = async (env: Env, id: string, practiceId: string): Promis
     throw new Error(`Failed to fetch practice ${practiceId} data`);
   }
 }
-

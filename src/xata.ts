@@ -195,6 +195,8 @@ const tables = [
       { name: "q2Time", type: "text" },
       { name: "q3Time", type: "text" },
       { name: "laps", type: "int" },
+      { name: "place", type: "text", notNull: true, defaultValue: " " },
+      { name: "year", type: "int", notNull: true, defaultValue: "2024" },
     ],
   },
   {
@@ -205,6 +207,8 @@ const tables = [
       { name: "driver", type: "link", link: { table: "Driver" } },
       { name: "team", type: "link", link: { table: "Team" } },
       { name: "time", type: "text" },
+      { name: "place", type: "text", notNull: true, defaultValue: " " },
+      { name: "year", type: "int", notNull: true, defaultValue: "2024" },
     ],
   },
   {
@@ -217,6 +221,8 @@ const tables = [
       { name: "laps", type: "int" },
       { name: "time", type: "text" },
       { name: "points", type: "int", notNull: true, defaultValue: "0" },
+      { name: "place", type: "text", notNull: true, defaultValue: " " },
+      { name: "year", type: "int", notNull: true, defaultValue: "2024" },
     ],
   },
 ] as const;
