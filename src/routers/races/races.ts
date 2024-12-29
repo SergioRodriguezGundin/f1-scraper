@@ -1,7 +1,6 @@
 import { Context, Hono } from 'hono';
-import { addFastestLaps, addPitStops, addPractice, addQualifying, addRaceResult, addStartingGrid } from '../../db/race';
+import { addFastestLaps, addPitStops, addPractice, addQualifying, addRaceResult, addSprintGrid, addSprintQualifying, addSprintRace, addStartingGrid } from '../../db/race';
 import { addRacesResults } from '../../db/races';
-import { addSprintGrid, addSprintQualifying, addSprintRace } from '../../db/sprint';
 import { RaceFastestLapsData } from '../../models/race/fastestLaps.model';
 import { RacePitStopsData } from '../../models/race/pitStop.model';
 import { RacePracticeData } from '../../models/race/practice.model';
@@ -11,9 +10,8 @@ import { RaceStartingGridData } from '../../models/race/startingGrid.model';
 import { SprintGridData } from '../../models/sprint/sprintGrid.model';
 import { SprintQualifyingData } from '../../models/sprint/sprintQualifying.model';
 import { SprintRaceData } from '../../models/sprint/sprintRace.model';
-import { fastestLaps, getRace, pitStops, practice, qualifying, startingGrid } from '../../scraper/race';
+import { fastestLaps, getRace, pitStops, practice, qualifying, sprintGrid, sprintQualifying, sprintRace, startingGrid } from '../../scraper/race';
 import { getRaces } from '../../scraper/races';
-import { sprintGrid, sprintQualifying, sprintRace } from '../../scraper/sprint';
 
 export function racesRouter(app: Hono) {
   app.get("/races", async (c: Context) => {
