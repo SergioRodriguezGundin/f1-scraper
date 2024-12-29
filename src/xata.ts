@@ -57,6 +57,7 @@ const tables = [
       { name: "laps", type: "int", notNull: true, defaultValue: "0" },
       { name: "date", type: "string", notNull: true, defaultValue: " " },
       { name: "winner", type: "link", link: { table: "Driver" } },
+      { name: "isSprintRace", type: "bool", defaultValue: "false" },
     ],
   },
   {
@@ -102,6 +103,7 @@ const tables = [
           '{\r\n    "driverImage": "",\r\n    "driverName": ""\r\n}',
       },
       { name: "year", type: "int", notNull: true, defaultValue: "2024" },
+      { name: "isSprintRace", type: "bool", defaultValue: "false" },
     ],
   },
   {
