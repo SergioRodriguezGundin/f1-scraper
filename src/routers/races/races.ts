@@ -108,5 +108,47 @@ export function racesRouter(app: Hono) {
       }
       return c.text("An unknown error occurred", 500);
     }
-  })
+  });
+
+  app.get('/race/:id/sprint-qualifying', async (c: Context) => {
+    try {
+      const raceSprintQualifying: RaceSprintQualifyingData[] = await sprintQualifying(c.env, c.req.param('id'));
+      await addSprintQualifying(c.env, c.req.param('id'), raceSprintQualifying);
+
+      return c.json(raceSprintQualifying);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return c.text(error.message, 500);
+      }
+      return c.text("An unknown error occurred", 500);
+    }
+  });
+
+  app.get('/race/:id/sprint-grid', async (c: Context) => {
+    try {
+      const raceSprintGrid: RaceSprintGridData[] = await sprintGrid(c.env, c.req.param('id'));
+      await addSprintGrid(c.env, c.req.param('id'), raceSprintGrid);
+
+      return c.json(raceSprintGrid);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return c.text(error.message, 500);
+      }
+      return c.text("An unknown error occurred", 500);
+    }
+  });
+
+  app.get('/race/:id/sprint-race', async (c: Context) => {
+    try {
+      const raceSprintRace: RaceSprintRaceData[] = await sprintRace(c.env, c.req.param('id'));
+      await addSprintRace(c.env, c.req.param('id'), raceSprintRace);
+
+      return c.json(raceSprintRace);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return c.text(error.message, 500);
+      }
+      return c.text("An unknown error occurred", 500);
+    }
+  });
 }

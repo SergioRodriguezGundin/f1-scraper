@@ -25,6 +25,9 @@ const tables = [
       { column: "driver", table: "Race_starting_grid" },
       { column: "driver", table: "Race_qualifying" },
       { column: "driver", table: "Race_practice" },
+      { column: "driver", table: "Sprint_qualifying" },
+      { column: "driver", table: "Sprint_grid" },
+      { column: "driver", table: "Sprint_race" },
     ],
   },
   {
@@ -46,6 +49,9 @@ const tables = [
       { column: "team", table: "Race_starting_grid" },
       { column: "team", table: "Race_qualifying" },
       { column: "team", table: "Race_practice" },
+      { column: "team", table: "Sprint_qualifying" },
+      { column: "team", table: "Sprint_grid" },
+      { column: "team", table: "Sprint_race" },
     ],
   },
   {
@@ -178,6 +184,41 @@ const tables = [
       { name: "session", type: "int", notNull: true, defaultValue: "0" },
     ],
   },
+  {
+    name: "Sprint_qualifying",
+    columns: [
+      { name: "position", type: "int", notNull: true, defaultValue: "0" },
+      { name: "driverNumber", type: "int", notNull: true, defaultValue: "0" },
+      { name: "driver", type: "link", link: { table: "Driver" } },
+      { name: "team", type: "link", link: { table: "Team" } },
+      { name: "q1Time", type: "text" },
+      { name: "q2Time", type: "text" },
+      { name: "q3Time", type: "text" },
+      { name: "laps", type: "int" },
+    ],
+  },
+  {
+    name: "Sprint_grid",
+    columns: [
+      { name: "position", type: "int", notNull: true, defaultValue: "0" },
+      { name: "driverNumber", type: "int", notNull: true, defaultValue: "0" },
+      { name: "driver", type: "link", link: { table: "Driver" } },
+      { name: "team", type: "link", link: { table: "Team" } },
+      { name: "time", type: "text" },
+    ],
+  },
+  {
+    name: "Sprint_race",
+    columns: [
+      { name: "position", type: "int", notNull: true, defaultValue: "0" },
+      { name: "driverNumber", type: "int", notNull: true, defaultValue: "0" },
+      { name: "driver", type: "link", link: { table: "Driver" } },
+      { name: "team", type: "link", link: { table: "Team" } },
+      { name: "laps", type: "int" },
+      { name: "time", type: "text" },
+      { name: "points", type: "int", notNull: true, defaultValue: "0" },
+    ],
+  },
 ] as const;
 
 export type SchemaTables = typeof tables;
@@ -213,6 +254,15 @@ export type RaceQualifyingRecord = RaceQualifying & XataRecord;
 export type RacePractice = InferredTypes["Race_practice"];
 export type RacePracticeRecord = RacePractice & XataRecord;
 
+export type SprintQualifying = InferredTypes["Sprint_qualifying"];
+export type SprintQualifyingRecord = SprintQualifying & XataRecord;
+
+export type SprintGrid = InferredTypes["Sprint_grid"];
+export type SprintGridRecord = SprintGrid & XataRecord;
+
+export type SprintRace = InferredTypes["Sprint_race"];
+export type SprintRaceRecord = SprintRace & XataRecord;
+
 export type DatabaseSchema = {
   Driver: DriverRecord;
   Team: TeamRecord;
@@ -224,6 +274,9 @@ export type DatabaseSchema = {
   Race_starting_grid: RaceStartingGridRecord;
   Race_qualifying: RaceQualifyingRecord;
   Race_practice: RacePracticeRecord;
+  Sprint_qualifying: SprintQualifyingRecord;
+  Sprint_grid: SprintGridRecord;
+  Sprint_race: SprintRaceRecord;
 };
 
 const DatabaseClient = buildClient();
