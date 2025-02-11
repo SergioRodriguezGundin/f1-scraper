@@ -1,3 +1,4 @@
+import { F1_YEAR } from '../../utils/globals';
 import { RacesResult, RaceResult } from '../../xata';
 
 export type RacesResultData = Omit<RacesResult, 'id'>;
@@ -8,7 +9,7 @@ export const raceModel: RacesResultData = {
 	team: null,
 	laps: 0,
 	time: '',
-	year: 2024,
+	year: Number(F1_YEAR),
 };
 
 export type RaceResultDetailData = Omit<RaceResult, 'id'>;
@@ -20,6 +21,6 @@ export const raceResultDetailModel: RaceResultDetailData = {
 	laps: 0,
 	timeOrRetired: '',
 	points: 0,
-	year: 2024,
+	year: Number(F1_YEAR),
 	place: '',
 };

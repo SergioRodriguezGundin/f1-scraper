@@ -1,3 +1,4 @@
+import { F1_YEAR } from '../../utils/globals';
 import { SprintGrid } from '../../xata';
 
 export type SprintGridData = Omit<SprintGrid, 'id'>;
@@ -9,5 +10,5 @@ export const sprintGridModel: SprintGridData = {
 	team: null,
 	time: '',
 	place: '',
-	year: 2024,
+	year: Number(F1_YEAR),
 };

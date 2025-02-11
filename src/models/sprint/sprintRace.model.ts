@@ -1,3 +1,4 @@
+import { F1_YEAR } from '../../utils/globals';
 import { SprintRace } from '../../xata';
 
 export type SprintRaceData = Omit<SprintRace, 'id'>;
@@ -11,5 +12,5 @@ export const sprintRaceModel: SprintRaceData = {
 	time: '',
 	points: 0,
 	place: '',
-	year: 2024,
+	year: Number(F1_YEAR),
 };
