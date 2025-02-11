@@ -16,6 +16,8 @@ const tables = [
       { name: "nationality", type: "string", notNull: true, defaultValue: " " },
       { name: "name", type: "string", notNull: true, defaultValue: " " },
       { name: "team", type: "link", link: { table: "Team" } },
+      { name: "year", type: "int", notNull: true, defaultValue: "2024" },
+      { name: "queryName", type: "text", notNull: true, defaultValue: " " },
     ],
     revLinks: [
       { column: "driver", table: "Race_result" },
@@ -39,6 +41,8 @@ const tables = [
       { name: "name", type: "string", notNull: true, defaultValue: " " },
       { name: "icon", type: "string" },
       { name: "car", type: "string", notNull: true, defaultValue: " " },
+      { name: "year", type: "int", notNull: true, defaultValue: "2024" },
+      { name: "queryName", type: "text", notNull: true, defaultValue: " " },
     ],
     revLinks: [
       { column: "team", table: "Driver" },
