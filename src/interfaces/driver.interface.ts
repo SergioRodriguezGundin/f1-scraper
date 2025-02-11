@@ -1,14 +1,5 @@
-import { Driver } from "../xata";
+import { Driver } from '../xata';
 
 export type DriverKeys = keyof Driver;
 
-export const driverKeys: DriverKeys[] = [
-  'id',
-  'position',
-  'name',
-  'nationality',
-  'team',
-  'points',
-  'image',
-];
-
+export const driverKeys: DriverKeys[] = ['id', 'position', 'name', 'nationality', 'team', 'points', 'image', 'year', 'queryName'];

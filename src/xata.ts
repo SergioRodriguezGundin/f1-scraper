@@ -68,6 +68,7 @@ const tables = [
       { name: "date", type: "string", notNull: true, defaultValue: " " },
       { name: "winner", type: "link", link: { table: "Driver" } },
       { name: "isSprintRace", type: "bool", defaultValue: "false" },
+      { name: "year", type: "int", notNull: true, defaultValue: "2024" },
     ],
   },
   {
