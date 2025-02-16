@@ -5,7 +5,7 @@ import { RaceResultDetailData } from '../models/race/race.model';
 import { RaceStartingGridData } from '../models/race/startingGrid.model';
 
 export const F1_URL = 'https://www.formula1.com';
-export const F1_YEAR = '2024';
+export const F1_YEAR = '2025';
 
 export const RESULTS = 'en/results';
 export const RACING = 'en/racing';

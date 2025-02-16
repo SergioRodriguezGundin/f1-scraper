@@ -19,12 +19,19 @@ export const getSchedule = async (): Promise<Schedule[]> => {
 			const bodyContainer = '.f1-inner-wrapper:first > div:last';
 
 			const round = $el.find('legend > p').text().trim();
-			const date = $el.find(`${headerContainer} > div:first > p > span`).text().trim();
-			const month = $el.find(`${headerContainer} > div:nth-child(2) > p > span`).text().trim();
+			const days = $el.find(`${headerContainer} > div:first > div > p > span`).text().trim();
+			const month = $el.find(`${headerContainer} > div:first > div > div > span > span`).text().trim();
 			const flag = $el.find(`${headerContainer} > div:first > img`).attr('src');
 			const place = $el.find(`${bodyContainer} > div:first > p`).text().trim();
 			const title = $el.find(`${bodyContainer} > div:nth-child(2) > p`).text().trim();
 			const trackImg = $el.find(`${bodyContainer} > div:last > img`).attr('src');
+
+			const startDay = parseInt(days.split('-')[0]); // Get first day if range
+			const monthStr = month.split('-')[0].trim(); // Get first month if range
+
+			// Create date string in ISO format
+			const dateStr = `${F1_YEAR}-${getMonthNumber(monthStr)}-${startDay.toString().padStart(2, '0')}`;
+			const eventDate = new Date(dateStr);
 
 			let podium: Schedule['firstPlace'][] = [];
 			if (!trackImg) {
@@ -33,8 +40,9 @@ export const getSchedule = async (): Promise<Schedule[]> => {
 
 			schedule.push({
 				round,
-				days: date,
+				days,
 				month,
+				date: eventDate,
 				flag: flag ?? '',
 				place,
 				title,
@@ -82,4 +90,22 @@ const addPodium = ($el: Cheerio<Element>, bodyContainer: string): Schedule['firs
 			driverName: thirdPlaceDriverName ?? '',
 		},
 	];
+};
+
+const getMonthNumber = (monthAbbr: string): string => {
+	const months: { [key: string]: string } = {
+		Jan: '01',
+		Feb: '02',
+		Mar: '03',
+		Apr: '04',
+		May: '05',
+		Jun: '06',
+		Jul: '07',
+		Aug: '08',
+		Sep: '09',
+		Oct: '10',
+		Nov: '11',
+		Dec: '12',
+	};
+	return months[monthAbbr] || '01'; // Default to January if month not found
 };
