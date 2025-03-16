@@ -12,29 +12,29 @@ import { SprintRaceData } from '../../models/sprint/sprintRace.model';
 import { Driver, RaceResult, RacesResult, Schedule, Team } from '../../xata';
 
 export interface DBClient {
-	getDriver(keys: DriverKeys[], values: any[]): Promise<Driver | null>;
-	addDrivers(drivers: Driver[]): Promise<void>;
-	getDrivers(keys: DriverKeys[]): Promise<Driver[]>;
+  getDriver(keys: DriverKeys[], values: any[]): Promise<Driver | null>;
+  addDrivers(drivers: Driver[]): Promise<void>;
+  getDrivers(keys: DriverKeys[]): Promise<Driver[]>;
 
-	getTeam(keys: TeamKeys[], values: any[]): Promise<Team | null>;
-	addTeams(teams: Team[]): Promise<void>;
-	getTeams(keys: TeamKeys[]): Promise<Team[]>;
+  getTeam(keys: TeamKeys[], values: any[]): Promise<Team | null>;
+  addTeams(teams: Team[]): Promise<void>;
+  getTeams(keys: TeamKeys[]): Promise<Team[]>;
 
-	getRacesResults(keys: RaceResultKeys[]): Promise<RacesResult[]>;
-	addRacesResults(races: RacesResult[]): Promise<void>;
+  getRacesResults(keys: RaceResultKeys[]): Promise<RacesResult[]>;
+  addRacesResults(races: RacesResult[]): Promise<void>;
 
-	getScheduleRace(keys: ScheduleKeys[], values: any[]): Promise<Schedule | null>;
-	addSchedule(schedule: Schedule[]): Promise<void>;
+  getScheduleRace(keys: ScheduleKeys[], values: any[]): Promise<Schedule | null>;
+  addSchedule(schedule: Schedule[]): Promise<void>;
 
-	getRaceResult(keys: RaceResultDetailKeys[], values: any[]): Promise<RaceResult | null>;
-	addRaceResult(raceResults: RaceResult[]): Promise<void>;
+  getRaceResult(keys: RaceResultDetailKeys[], values: any[]): Promise<RaceResult | null>;
+  addRaceResult(raceResults: RaceResult[]): Promise<void>;
 
-	addRacePitStops(racePitStops: RacePitStopsData[]): Promise<void>;
-	addRaceStartingGrid(raceStartingGrid: RaceStartingGridData[]): Promise<void>;
-	addRaceQualifying(raceQualifying: RaceQualifyingData[]): Promise<void>;
-	addRacePractice(racePractice: RacePracticeData[]): Promise<void>;
+  addRacePitStops(racePitStops: RacePitStopsData[]): Promise<void>;
+  addRaceStartingGrid(raceStartingGrid: RaceStartingGridData[]): Promise<void>;
+  addRaceQualifying(raceQualifying: RaceQualifyingData[]): Promise<void>;
+  addRacePractice(racePractice: RacePracticeData[]): Promise<void>;
 
-	addSprintGrid(sprintGrid: SprintGridData[]): Promise<void>;
-	addSprintRace(sprintRace: SprintRaceData[]): Promise<void>;
-	addSprintQualifying(sprintQualifying: SprintQualifyingData[]): Promise<void>;
+  addSprintGrid(sprintGrid: SprintGridData[]): Promise<void>;
+  addSprintRace(sprintRace: SprintRaceData[]): Promise<void>;
+  addSprintQualifying(sprintQualifying: SprintQualifyingData[]): Promise<void>;
 }

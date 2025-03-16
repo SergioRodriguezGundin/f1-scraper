@@ -47,69 +47,69 @@ racesMap.set('qatar', { race: 'races/1275/qatar', place: 'Qatar' });
 racesMap.set('abu-dhabi', { race: 'races/1276/abu-dhabi', place: 'Abu Dhabi' });
 
 export const getRacePlace = (race: string) => {
-	return racesMap.get(race)?.place;
+  return racesMap.get(race)?.place;
 };
 
 export const getRaceResultUrl = (race: string) => {
-	return `${racesMap.get(race)?.race}/race-result`;
+  return `${racesMap.get(race)?.race}/race-result`;
 };
 
 export const getFastestLapsUrl = (race: string) => {
-	return `${racesMap.get(race)?.race}/fastest-laps`;
+  return `${racesMap.get(race)?.race}/fastest-laps`;
 };
 
 export const getPitStopsUrl = (race: string) => {
-	return `${racesMap.get(race)?.race}/pit-stop-summary`;
+  return `${racesMap.get(race)?.race}/pit-stop-summary`;
 };
 
 export const getQualifyingUrl = (race: string) => {
-	return `${racesMap.get(race)?.race}/qualifying`;
+  return `${racesMap.get(race)?.race}/qualifying`;
 };
 
 export const getStartingGridUrl = (race: string) => {
-	return `${racesMap.get(race)?.race}/starting-grid`;
+  return `${racesMap.get(race)?.race}/starting-grid`;
 };
 
 export const getPracticeOneUrl = (race: string) => {
-	return `${racesMap.get(race)?.race}/practice/1`;
+  return `${racesMap.get(race)?.race}/practice/1`;
 };
 
 export const getPracticeTwoUrl = (race: string) => {
-	return `${racesMap.get(race)?.race}/practice/2`;
+  return `${racesMap.get(race)?.race}/practice/2`;
 };
 
 export const getPracticeThreeUrl = (race: string) => {
-	return `${racesMap.get(race)?.race}/practice/3`;
+  return `${racesMap.get(race)?.race}/practice/3`;
 };
 
 export const getSprintQualifyingUrl = (race: string) => {
-	return `${racesMap.get(race)?.race}/sprint-qualifying`;
+  return `${racesMap.get(race)?.race}/sprint-qualifying`;
 };
 
 export const getSprintGridUrl = (race: string) => {
-	return `${racesMap.get(race)?.race}/sprint-grid`;
+  return `${racesMap.get(race)?.race}/sprint-grid`;
 };
 
 export const getSprintRaceUrl = (race: string) => {
-	return `${racesMap.get(race)?.race}/sprint-results`;
+  return `${racesMap.get(race)?.race}/sprint-results`;
 };
 
 const practiceUrlGetters: Record<number, (id: string) => string> = {
-	1: getPracticeOneUrl,
-	2: getPracticeTwoUrl,
-	3: getPracticeThreeUrl,
+  1: getPracticeOneUrl,
+  2: getPracticeTwoUrl,
+  3: getPracticeThreeUrl,
 };
 
 export const getPracticeUrlById = (id: string, practiceId: number): string => {
-	const practiceUrl = practiceUrlGetters[practiceId];
+  const practiceUrl = practiceUrlGetters[practiceId];
 
-	if (!practiceUrl) {
-		throw new Error(`Invalid practice session ID: ${practiceId}`);
-	}
+  if (!practiceUrl) {
+    throw new Error(`Invalid practice session ID: ${practiceId}`);
+  }
 
-	return practiceUrl(id);
+  return practiceUrl(id);
 };
 
 export const setYear = async (raceResult: RaceResultType): Promise<void> => {
-	raceResult.year = Number(F1_YEAR);
+  raceResult.year = Number(F1_YEAR);
 };

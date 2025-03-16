@@ -7,14 +7,14 @@ export const raceResultKeys: RaceResultKeys[] = ['id', 'track', 'date', 'winner'
 export type RaceResultDetailKeys = keyof RaceResult;
 
 export const raceResultDetailKeys: RaceResultDetailKeys[] = [
-	'id',
-	'position',
-	'driverNumber',
-	'driver',
-	'team',
-	'laps',
-	'timeOrRetired',
-	'points',
-	'year',
-	'place',
+  'id',
+  'position',
+  'driverNumber',
+  'driver',
+  'team',
+  'laps',
+  'timeOrRetired',
+  'points',
+  'year',
+  'place',
 ];
