@@ -2,6 +2,7 @@ import { Driver } from '../xata';
 import { Team } from '../xata';
 import { DBXataClient } from './client/xata';
 import { DriverData } from '../models/driver.model';
+import { F1_YEAR } from '../utils/globals';
 
 export const addDrivers = async (env: Env, drivers: DriverData[]): Promise<void> => {
 	const xata = DBXataClient.getInstance(env);
@@ -20,7 +21,7 @@ const mergeDrivers = (drivers: DriverData[], driversDB: Driver[]): Driver[] => {
 		const driversDBMap = new Map(driversDB.map((driverDB: Driver) => [driverDB.name, driverDB]));
 
 		const existingDriver = driversDBMap.get(driver.name);
-		if (!existingDriver) {
+		if (!existingDriver || existingDriver.year !== parseInt(F1_YEAR)) {
 			return { ...driver, id: crypto.randomUUID() };
 		} else {
 			return { ...driver, id: existingDriver.id };

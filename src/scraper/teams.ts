@@ -24,7 +24,7 @@ export const getTeams = async (env: Env): Promise<TeamData[]> => {
 };
 
 export const setTeamImage = async (team: TeamData, env: Env) => {
-	const teamNameToSearch = team.name.replace(/\s+/g, '_');
+	const teamNameToSearch = team.name.replace(/\s+/g, '_').trim();
 	const teamImage = await env.F1_ASSETS.get(teamNameToSearch);
 	const teamIcon = await env.F1_ASSETS.get(`${teamNameToSearch}_icon`);
 	const teamCar = await env.F1_ASSETS.get(`${teamNameToSearch}_car`);

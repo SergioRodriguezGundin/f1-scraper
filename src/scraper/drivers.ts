@@ -26,11 +26,11 @@ export const getDrivers = async (env: Env): Promise<DriverData[]> => {
 
 export const setDriverImage = async (driver: DriverData, env: Env) => {
 	const nameParts = driver.name.split(' ');
-	const nationality = driver.nationality;
+	const nationality = driver.nationality.trim();
+	const keyName = nameParts[nameParts.length - 1].trim();
 
-	const keyName = nameParts[nameParts.length - 1];
-	const image = await env.F1_ASSETS.get(keyName, { type: 'text', cacheTtl: 3600 });
-	const flag = await env.F1_ASSETS.get(nationality, { type: 'text', cacheTtl: 3600 });
+	const image = await env.F1_ASSETS.get(keyName);
+	const flag = await env.F1_ASSETS.get(nationality);
 
 	if (image === null) {
 		throw new Error(`Image with key ${keyName} not found`);
