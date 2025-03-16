@@ -20,6 +20,43 @@ export type RaceResultType = RaceResultDetailData | RaceFastestLapsData | RacePi
 
 export const TABLE_ELEMENT = 'table.f1-table tbody tr';
 
+export const queryNameDriversMap = new Map<string, string>();
+queryNameDriversMap.set('Lewis Hamilton HAM', 'hamilton');
+queryNameDriversMap.set('George Russell RUS', 'russell');
+queryNameDriversMap.set('Max Verstappen VER', 'verstappen');
+queryNameDriversMap.set('Sergio Perez PER', 'perez');
+queryNameDriversMap.set('Charles Leclerc LEC', 'leclerc');
+queryNameDriversMap.set('Carlos Sainz SAI', 'sainz');
+queryNameDriversMap.set('Lando Norris NOR', 'norris');
+queryNameDriversMap.set('Oscar Piastri PIA', 'piastri');
+queryNameDriversMap.set('Pierre Gasly GAS', 'gasly');
+queryNameDriversMap.set('Esteban Ocon OCO', 'ocon');
+queryNameDriversMap.set('Fernando Alonso ALON', 'alonso');
+queryNameDriversMap.set('Lance Stroll STR', 'stroll');
+queryNameDriversMap.set('Kevin Magnussen MAG', 'magnussen');
+queryNameDriversMap.set('Nico Hulkenberg HUL', 'hulkenberg');
+queryNameDriversMap.set('Yuki Tsunoda TSUN', 'tsunoda');
+queryNameDriversMap.set('Liam Lawson LAW', 'lawson');
+queryNameDriversMap.set('Logan Sargeant SAR', 'sargeant');
+queryNameDriversMap.set('Alexander Albon ALB', 'albon');
+queryNameDriversMap.set('Valtteri Bottas BOT', 'bottas');
+queryNameDriversMap.set('Guanyu Zhou ZHO', 'zhou');
+queryNameDriversMap.set('Oliver Bearman BEA', 'bearman');
+queryNameDriversMap.set('Daniel Ricciardo RIC', 'ricciardo');
+queryNameDriversMap.set('Franco Colapinto COL', 'colapinto');
+
+export const queryNameTeamsMap = new Map<string, string>();
+queryNameTeamsMap.set('Mclaren Mercedes', 'mclaren');
+queryNameTeamsMap.set('Ferrari', 'ferrari');
+queryNameTeamsMap.set('Red Bull Racing Honda RBPT', 'redbull');
+queryNameTeamsMap.set('Mercedes', 'mercedes');
+queryNameTeamsMap.set('Aston Martin Aramco Mercedes', 'astonMartin');
+queryNameTeamsMap.set('Alpine Renault', 'alpine');
+queryNameTeamsMap.set('RB Honda RBPT', 'rb');
+queryNameTeamsMap.set('Haas Ferrari', 'haas');
+queryNameTeamsMap.set('Williams Mercedes', 'williams');
+queryNameTeamsMap.set('Kick Sauber Ferrari', 'sauber');
+
 export const racesMap = new Map<string, { race: string; place: string }>();
 racesMap.set('bahrain', { race: 'races/1257/bahrain', place: 'Bahrain' });
 racesMap.set('saudi-arabia', { race: 'races/1258/saudi-arabia', place: 'Saudi Arabia' });

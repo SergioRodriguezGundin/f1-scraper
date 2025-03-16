@@ -2,7 +2,7 @@ import { TeamKeys } from '../interfaces/team.interface';
 import { Team } from '../xata';
 import { DBXataClient } from './client/xata';
 import { TeamData } from '../models/team.model';
-import { F1_YEAR } from '../utils/globals';
+import { F1_YEAR, queryNameTeamsMap } from '../utils/globals';
 
 export const addTeams = async (env: Env, teams: TeamData[]) => {
   const xata = DBXataClient.getInstance(env);
@@ -24,7 +24,7 @@ const mergeTeams = (teams: TeamData[], teamsDB: Team[]): Team[] => {
   return teams.map((team: TeamData) => {
     const teamDB = teamsDBMap.get(team.name);
     if (!teamDB || team.year !== Number(F1_YEAR)) {
-      return { ...team, id: crypto.randomUUID() };
+      return { ...team, id: crypto.randomUUID(), year: parseInt(F1_YEAR), queryName: queryNameTeamsMap.get(team.name) ?? '' };
     }
     return { ...team, id: teamDB.id };
   });
