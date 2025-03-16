@@ -46,14 +46,14 @@ queryNameDriversMap.set('Daniel Ricciardo RIC', 'ricciardo');
 queryNameDriversMap.set('Franco Colapinto COL', 'colapinto');
 
 export const queryNameTeamsMap = new Map<string, string>();
-queryNameTeamsMap.set('Mclaren Mercedes', 'mclaren');
+queryNameTeamsMap.set('McLaren Mercedes', 'mclaren');
 queryNameTeamsMap.set('Ferrari', 'ferrari');
 queryNameTeamsMap.set('Red Bull Racing Honda RBPT', 'redbull');
 queryNameTeamsMap.set('Mercedes', 'mercedes');
 queryNameTeamsMap.set('Aston Martin Aramco Mercedes', 'astonMartin');
 queryNameTeamsMap.set('Alpine Renault', 'alpine');
 queryNameTeamsMap.set('RB Honda RBPT', 'rb');
-queryNameTeamsMap.set('Racing Bulls', 'racingBulls');
+queryNameTeamsMap.set('Racing Bulls Honda RBPT', 'racingBulls');
 queryNameTeamsMap.set('Haas Ferrari', 'haas');
 queryNameTeamsMap.set('Williams Mercedes', 'williams');
 queryNameTeamsMap.set('Kick Sauber Ferrari', 'sauber');
