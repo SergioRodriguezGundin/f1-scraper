@@ -53,6 +53,7 @@ queryNameTeamsMap.set('Mercedes', 'mercedes');
 queryNameTeamsMap.set('Aston Martin Aramco Mercedes', 'astonMartin');
 queryNameTeamsMap.set('Alpine Renault', 'alpine');
 queryNameTeamsMap.set('RB Honda RBPT', 'rb');
+queryNameTeamsMap.set('Racing Bulls', 'racingBulls');
 queryNameTeamsMap.set('Haas Ferrari', 'haas');
 queryNameTeamsMap.set('Williams Mercedes', 'williams');
 queryNameTeamsMap.set('Kick Sauber Ferrari', 'sauber');
