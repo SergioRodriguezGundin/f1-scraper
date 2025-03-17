@@ -1,4 +1,5 @@
 import { RacesResultData } from '../models/race/race.model';
+import { F1_YEAR } from '../utils/globals';
 import { Driver } from '../xata';
 import { RacesResult } from '../xata';
 import { Team } from '../xata';
@@ -26,6 +27,7 @@ const mergeRaceResults = (races: RacesResultData[], dbRaces: RacesResult[]): Rac
       return {
         ...raceResult,
         id: crypto.randomUUID(),
+        year: parseInt(F1_YEAR),
       };
     } else {
       return {
