@@ -15,7 +15,7 @@ import { RaceFastestLapsData } from '../../models/race/fastestLaps.model';
 import { RacePitStopsData } from '../../models/race/pitStop.model';
 import { RacePracticeData } from '../../models/race/practice.model';
 import { RaceQualifyingData } from '../../models/race/qualifying.model';
-import { RaceResultDetailData, RacesResultData } from '../../models/race/race.model';
+import { RaceResultDetailData, RacesResultScraper } from '../../models/race/race.model';
 import { RaceStartingGridData } from '../../models/race/startingGrid.model';
 import { SprintGridData } from '../../models/sprint/sprintGrid.model';
 import { SprintQualifyingData } from '../../models/sprint/sprintQualifying.model';
@@ -36,7 +36,7 @@ import { getRaces } from '../../scraper/races';
 export function racesRouter(app: Hono) {
   app.get('/races', async (c: Context) => {
     try {
-      const races: RacesResultData[] = await getRaces(c.env);
+      const races: RacesResultScraper[] = await getRaces(c.env);
       await addRacesResults(c.env, races);
 
       return c.json(races);
